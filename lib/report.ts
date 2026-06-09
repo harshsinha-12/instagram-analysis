@@ -1,7 +1,9 @@
-import { samplePosts } from "@/lib/sample-data";
 import { analyzePost } from "@/lib/mock-ai";
+import { saveRunJson } from "@/lib/run-storage";
 import { scorePosts } from "@/lib/scoring";
 import { AnalysisInput, Report } from "@/lib/types";
+import { ScraperResult } from "@/scrapers/base-scraper.interface";
+import { InstagramWebScraper } from "@/scrapers/instagram-web-scraper";
 
 export function normalizeHandle(value: string) {
   const trimmed = value.trim();
@@ -9,11 +11,85 @@ export function normalizeHandle(value: string) {
   return trimmed.startsWith("@") ? trimmed : `@${trimmed}`;
 }
 
-export function buildReport(input: AnalysisInput, id = "demo-report"): Report {
-  const selectedCompetitors = new Set(input.competitors.map(normalizeHandle));
-  const posts = samplePosts.filter((post) => selectedCompetitors.size === 0 || selectedCompetitors.has(post.account));
-  const scored = scorePosts(posts.length > 0 ? posts : samplePosts);
-  const analyzed = scored.map((post) => ({ ...post, analysis: analyzePost(post, input.brand) }));
+function buildEmptyReport(input: AnalysisInput, id: string, rawDataPath?: string, fetchErrors: Array<{ handle: string; error: string }> = []): Report {
+  return {
+    id,
+    input,
+    createdAt: new Date().toISOString(),
+    rawDataPath,
+    fetchErrors,
+    competitors: [],
+    topPosts: [],
+    patterns: [],
+    contentPillars: [],
+    reelIdeas: [],
+    actionPlan: ["No public posts were available from the configured Instagram handles for this run."]
+  };
+}
+
+async function fetchCompetitorPosts(input: AnalysisInput) {
+  const scraper = new InstagramWebScraper();
+  const handles = input.competitors.length > 0 ? input.competitors : [];
+  const results: ScraperResult[] = [];
+  const fetchErrors: Array<{ handle: string; error: string }> = [];
+
+  await Promise.all(
+    handles.map(async (handle) => {
+      try {
+        const result = await scraper.fetchPosts({
+          handle,
+          lookbackDays: input.lookbackDays,
+          dateFrom: input.dateFrom,
+          dateTo: input.dateTo,
+          contentType: input.contentType,
+          limit: input.postsToFetchPerCompetitor,
+          downloadVideos: true
+        });
+        results.push(result);
+      } catch (error) {
+        fetchErrors.push({
+          handle,
+          error: error instanceof Error ? error.message : "Unknown scraper error"
+        });
+      }
+    })
+  );
+
+  return { results, fetchErrors };
+}
+
+export async function buildReport(input: AnalysisInput, id = "demo-report"): Promise<Report> {
+  const dateFrom = input.dateFrom ? new Date(input.dateFrom) : null;
+  const dateTo = input.dateTo ? new Date(input.dateTo) : null;
+  if (dateTo) {
+    dateTo.setHours(23, 59, 59, 999);
+  }
+  const { results, fetchErrors } = await fetchCompetitorPosts(input);
+  const fetchedPosts = results.flatMap((result) => result.posts);
+  const rawDataPath = await saveRunJson({
+    id,
+    input,
+    fetchedAt: new Date().toISOString(),
+    results,
+    fetchErrors
+  });
+
+  const posts = fetchedPosts
+    .filter((post) => {
+      const postedAt = new Date(post.postedAt);
+      if (dateFrom && postedAt < dateFrom) return false;
+      if (dateTo && postedAt > dateTo) return false;
+      return true;
+    })
+    .slice(0, input.postsToFetchPerCompetitor * Math.max(input.competitors.length, 1));
+
+  if (posts.length === 0) {
+    return buildEmptyReport(input, id, rawDataPath, fetchErrors);
+  }
+
+  const scored = scorePosts(posts);
+  const selectedForAnalysis = scored.slice(0, input.reelsToAnalyze);
+  const analyzed = selectedForAnalysis.map((post) => ({ ...post, analysis: analyzePost(post, input.brand) }));
 
   const accounts = Array.from(new Set(analyzed.map((post) => post.account)));
   const competitors = accounts.map((account) => {
@@ -34,79 +110,81 @@ export function buildReport(input: AnalysisInput, id = "demo-report"): Report {
     id,
     input,
     createdAt: new Date().toISOString(),
+    rawDataPath,
+    fetchErrors,
     competitors,
-    topPosts: analyzed.slice(0, 20),
+    topPosts: analyzed.slice(0, input.topPostsToSelect),
     patterns: [
       {
-        name: "Mistake-framed hooks",
-        count: analyzed.filter((post) => post.analysis.hookType === "mistake avoidance").length,
-        psychology: "Loss aversion makes viewers pause because skipping the reel feels like risking an avoidable financial error.",
-        replicability: "High"
-      },
-      {
-        name: "Checklist structure",
+        name: "Clear opening premise",
         count: analyzed.length,
-        psychology: "A numbered path lowers cognitive load and makes the content feel save-worthy.",
+        psychology: "Top posts usually make the viewer understand the topic or tension quickly, which reduces scroll-away risk.",
         replicability: "High"
       },
       {
-        name: "Beginner-first language",
-        count: analyzed.filter((post) => post.caption.toLowerCase().includes("beginner") || post.caption.toLowerCase().includes("simple")).length + 4,
-        psychology: "Finance audiences reward clarity because it reduces shame and confusion around money decisions.",
+        name: "High relative performance",
+        count: analyzed.length,
+        psychology: "Posts that beat their account baseline are stronger creative signals than posts with only large raw numbers.",
         replicability: "High"
       },
       {
-        name: "Save/share CTAs over follow CTAs",
-        count: analyzed.filter((post) => post.caption.toLowerCase().includes("save") || post.comments.some((comment) => comment.toLowerCase().includes("sharing"))).length,
-        psychology: "The CTA aligns with the viewer's intent to remember or send the advice to family.",
+        name: "Comment-generating topics",
+        count: analyzed.filter((post) => post.commentRateNormalized > 0.6).length,
+        psychology: "A higher comment rate suggests the post created questions, opinions, objections, or social proof.",
+        replicability: "Medium"
+      },
+      {
+        name: "Reusable creative angle",
+        count: analyzed.filter((post) => post.finalScore > 0.5).length,
+        psychology: "A strong topic, hook, or format can be adapted by changing the brand context rather than copying the post.",
         replicability: "High"
       }
     ],
     contentPillars: [
-      "Beginner mistake avoidance",
-      "Decision checklists for tax, SIP, stocks, and funds",
-      "Anxiety-reducing market education"
+      "Highest-scoring competitor themes",
+      "Audience questions and objections",
+      "Reusable hooks and formats"
     ],
     reelIdeas: [
       {
-        title: "3 investing mistakes beginners make in their first year",
+        title: `Adapt ${analyzed[0]?.analysis.topic ?? "the top competitor theme"}`,
         inspiredBy: analyzed[0]?.accountName ?? "competitor winner",
-        patternReused: "Mistake-framed hook + list format + save CTA",
-        format: "Talking head with bold text overlays",
-        duration: "25-30 seconds",
-        hook: "Most beginners lose money in year one, not from bad stocks, but from these three mistakes.",
-        structure: "Hook -> Mistake 1 -> Mistake 2 -> Mistake 3 -> save CTA",
-        cta: "Save this before your next investment.",
-        brandNote: `Use ${input.brand}'s ${input.brandTone || "simple, trustworthy"} tone and avoid ${input.brandAvoid || "jargon"}.`
+        patternReused: "Strong opening premise + account-relative overperformance",
+        format: "Short-form video or carousel, depending on the source post",
+        duration: "20-35 seconds for reels",
+        hook: `A ${input.brand}-specific angle on the top-performing competitor topic.`,
+        structure: "Hook -> context -> key insight -> brand-safe takeaway -> engagement CTA",
+        cta: "Save or share if this is useful.",
+        brandNote: `Use ${input.brand}'s ${input.brandTone || "brand"} tone and avoid ${input.brandAvoid || "copying competitor execution"}.`
       },
       {
-        title: "The salary split that makes investing automatic",
-        inspiredBy: "Angel One salary budget reel",
-        patternReused: "Relatable monthly money problem + simple framework",
-        format: "Screen-recorded calculator plus presenter",
-        duration: "30 seconds",
-        hook: "Your salary is not too small to invest. It just needs one rule.",
-        structure: "Hook -> sample salary -> split -> SIP amount -> share CTA",
-        cta: "Share this with someone starting their first job.",
-        brandNote: "Use realistic Indian salary examples and keep numbers easy to follow."
+        title: "Turn a high-comment post into a follow-up",
+        inspiredBy: analyzed.find((post) => post.commentRateNormalized > 0.6)?.accountName ?? "highest comment-rate competitor post",
+        patternReused: "Audience reaction -> follow-up content",
+        format: "Direct response reel or carousel",
+        duration: "20-40 seconds",
+        hook: "People had one big question about this topic.",
+        structure: "Question/comment signal -> answer -> example -> next-step CTA",
+        cta: "Comment with the next question to cover.",
+        brandNote: "Use real audience language from comments once live comment fetching is connected."
       },
       {
-        title: "Do this before selling when your portfolio is red",
-        inspiredBy: "Upstox market anxiety reel",
-        patternReused: "Anxiety relief + checklist",
-        format: "Presenter with red/green portfolio overlays",
-        duration: "20-25 seconds",
-        hook: "If your portfolio is red today, pause before you sell.",
-        structure: "Hook -> three checks -> calming close -> save CTA",
-        cta: "Save this for the next market dip.",
-        brandNote: "Make the content feel calm and educational, not like trading advice."
+        title: "Reframe the best competitor hook for your brand",
+        inspiredBy: analyzed[1]?.accountName ?? "second-best competitor post",
+        patternReused: "Hook format reuse without creative copying",
+        format: "Native brand creative",
+        duration: "15-30 seconds",
+        hook: analyzed[1]?.analysis.suggestedHook ?? "A brand-specific version of a proven competitor hook.",
+        structure: "Hook -> brand example -> proof or explanation -> CTA",
+        cta: "Save this for later.",
+        brandNote: "Keep the strategic premise but change examples, words, visuals, and tone."
       }
     ],
     actionPlan: [
-      "Publish two mistake-framed beginner reels per week.",
-      "Turn every high-comment reel into a part-two follow-up within seven days.",
-      "Use save/share CTAs on reference-style education instead of generic follow CTAs.",
-      "Track relative views and comment themes before deciding what to scale."
+      "Fetch competitor posts, score them mathematically, and only analyze the selected winners.",
+      "Use AI analysis to explain creative patterns, not to decide the ranking.",
+      "Translate each winning pattern into brand-specific examples and visuals.",
+      "Track relative views, comment rate, and recurring audience themes before deciding what to scale."
     ]
   };
 }

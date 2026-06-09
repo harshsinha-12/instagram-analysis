@@ -6,14 +6,16 @@ import { PrintButton } from "@/components/PrintButton";
 import { TopPostsTable } from "@/components/TopPostsTable";
 import { getReport } from "@/lib/jobs";
 
+export const dynamic = "force-dynamic";
+
 function compact(value: number) {
   return Intl.NumberFormat("en", { notation: "compact" }).format(value);
 }
 
-export default function ReportPage({ params }: { params: { id: string } }) {
-  const report = getReport(params.id);
+export default async function ReportPage({ params }: { params: { id: string } }) {
+  const report = await getReport(params.id);
   const bestPost = report.topPosts[0];
-  const avgScore = report.topPosts.reduce((sum, post) => sum + post.finalScore, 0) / report.topPosts.length;
+  const avgScore = report.topPosts.length > 0 ? report.topPosts.reduce((sum, post) => sum + post.finalScore, 0) / report.topPosts.length : 0;
 
   return (
     <main className="min-h-screen">
@@ -41,8 +43,8 @@ export default function ReportPage({ params }: { params: { id: string } }) {
       <div className="mx-auto grid max-w-7xl gap-6 px-5 py-6">
         <section className="grid gap-4 md:grid-cols-4">
           <MetricCard label="Competitors" value={String(report.competitors.length)} detail="represented in top posts" />
-          <MetricCard label="Top views" value={compact(bestPost.views)} detail={bestPost.account} />
-          <MetricCard label="Best score" value={(bestPost.finalScore * 100).toFixed(0)} detail={bestPost.analysis.hookType} />
+          <MetricCard label="Top views" value={bestPost ? compact(bestPost.views) : "0"} detail={bestPost?.account ?? "No posts fetched"} />
+          <MetricCard label="Best score" value={bestPost ? (bestPost.finalScore * 100).toFixed(0) : "0"} detail={bestPost?.analysis.hookType ?? "No analysis"} />
           <MetricCard label="Avg score" value={(avgScore * 100).toFixed(0)} detail="across analyzed posts" />
         </section>
 
@@ -70,7 +72,13 @@ export default function ReportPage({ params }: { params: { id: string } }) {
 
         <section>
           <h2 className="mb-3 text-xl font-semibold">Top Performing Reels</h2>
-          <TopPostsTable posts={report.topPosts} />
+          {report.topPosts.length > 0 ? (
+            <TopPostsTable posts={report.topPosts} />
+          ) : (
+            <div className="rounded-lg border border-line bg-white p-5 text-sm text-muted shadow-sm">
+              No public posts were fetched for this run. Check the configured handles, lookback window, and Instagram rate limits.
+            </div>
+          )}
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[0.7fr_1.3fr]">

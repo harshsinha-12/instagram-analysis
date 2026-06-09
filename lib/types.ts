@@ -7,6 +7,11 @@ export type AnalysisInput = {
   platform: "Instagram";
   contentType: ContentType;
   lookbackDays: number;
+  dateFrom?: string;
+  dateTo?: string;
+  postsToFetchPerCompetitor: number;
+  topPostsToSelect: number;
+  reelsToAnalyze: number;
   industry?: string;
   targetAudience?: string;
   brandTone?: string;
@@ -21,6 +26,8 @@ export type RawPost = {
   followers: number;
   url: string;
   thumbnailUrl: string;
+  videoUrl?: string;
+  downloadedVideoPath?: string;
   caption: string;
   postedAt: string;
   views: number;
@@ -98,6 +105,8 @@ export type Report = {
   id: string;
   input: AnalysisInput;
   createdAt: string;
+  rawDataPath?: string;
+  fetchErrors?: Array<{ handle: string; error: string }>;
   competitors: Array<{
     handle: string;
     name: string;

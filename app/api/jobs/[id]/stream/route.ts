@@ -23,7 +23,7 @@ export async function GET(_request: Request, { params }: { params: { id: string 
 
       for (const event of events) {
         if (event.status === "completed") {
-          completeJob(params.id);
+          await completeJob(params.id);
         }
         controller.enqueue(sse(event));
         await wait(650);

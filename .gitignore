@@ -23,6 +23,7 @@ prisma/migrations/dev.db
 
 # Media processing (yt-dlp downloads, ffmpeg frames)
 tmp/
+
 frames/
 audio/
 

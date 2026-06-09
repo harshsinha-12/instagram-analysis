@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { AnalyzedPost } from "@/lib/types";
 
 function percent(value: number) {
@@ -30,11 +29,10 @@ export function TopPostsTable({ posts }: { posts: AnalyzedPost[] }) {
             {posts.map((post) => (
               <tr key={post.id} className="border-t border-line align-top">
                 <td className="flex items-center gap-3 p-3">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={post.thumbnailUrl}
                     alt=""
-                    width={68}
-                    height={68}
                     className="h-[68px] w-[68px] rounded-md object-cover"
                   />
                   <div>

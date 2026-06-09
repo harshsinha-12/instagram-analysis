@@ -1,0 +1,138 @@
+{
+  "id": "job_mq6wy914_ot3sjd",
+  "input": {
+    "brand": "Groww",
+    "brandHandle": "@groww_official",
+    "competitors": [
+      "@zerodhaonline",
+      "@angelone",
+      "@upstox.pro"
+    ],
+    "platform": "Instagram",
+    "contentType": "reels",
+    "lookbackDays": 30,
+    "dateFrom": "2026-06-01",
+    "dateTo": "2026-06-09",
+    "postsToFetchPerCompetitor": 20,
+    "topPostsToSelect": 20,
+    "reelsToAnalyze": 5,
+    "industry": "Fintech / Investing",
+    "targetAudience": "Young Indian retail investors aged 22-35",
+    "brandTone": "Simple, trustworthy, beginner-friendly",
+    "brandAvoid": "Jargon, aggressive CTAs, complexity"
+  },
+  "fetchedAt": "2026-06-09T17:28:26.015Z",
+  "results": [
+    {
+      "handle": "@zerodhaonline",
+      "fetchedAt": "2026-06-09T17:28:21.284Z",
+      "source": "instagram_web",
+      "posts": []
+    },
+    {
+      "handle": "@upstox.pro",
+      "fetchedAt": "2026-06-09T17:28:21.547Z",
+      "source": "instagram_web",
+      "posts": [
+        {
+          "id": "3915023029771778851",
+          "shortcode": "DZU9LPxBTsj",
+          "account": "@upstox.pro",
+          "accountName": "Upstox",
+          "followers": 320895,
+          "url": "https://www.instagram.com/p/DZU9LPxBTsj/",
+          "thumbnailUrl": "https://instagram.fagr1-2.fna.fbcdn.net/v/t51.71878-15/718906724_1361179965915205_5530975397187267967_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_tt6&_nc_ht=instagram.fagr1-2.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2gHqG_UtBtHVa9H7jqa-4nozJY9eLipZiHctvNDWJ0vGRWTJvYiKnaA7QqMVCy5xFN__EbLmDXDkcnkzq6by9PAD&_nc_ohc=llgqnJmPPkIQ7kNvwG1W62V&_nc_gid=H82ZllooxAn7jzXT0H7IAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af9ctc0pFH8yKjaXo9Mv2ryF1G7fUMzkwACPZkQeoJBFvA&oe=6A2E35CD&_nc_sid=8b3546",
+          "videoUrl": "https://instagram.fagr1-2.fna.fbcdn.net/o1/v/t2/f2/m86/AQOCO2uQRmFwrkL89-qcGM9f_EaB5r1dlyTJZF5vUlg3POEHg18knn3YKbs_RfNWpvrzbgh2P2KRB7gXMmu6_vIeBwP5_HGCck6APls.mp4?_nc_cat=100&_nc_oc=AdpjE9YKlkh3cTlUiGK6oRPjZRHr7Mwl_-9LqZbkNW58FkEwGbbufPCJ8kCKquV1qzxpPF51p3eJdu2stu3wKpKQ&_nc_sid=5e9851&_nc_ht=instagram.fagr1-2.fna.fbcdn.net&_nc_ohc=7cR1i8wgqEkQ7kNvwER9z99&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTAwNDI3MjAyNTg2ODM4NSwiYXNzZXRfYWdlX2RheXMiOjEsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=d47b08265c757665&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8wMzRFQTNBMjIxOUU4QThBMjMxQkVDQkZDOEFFQjk4Ml92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzA4NDUzQTcyOEQ3OTJCMTJBMEJENUI2REEzNDNCQ0EyX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbC4eDVqdjIAxUCKAJDMywXQD4AAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=H82ZllooxAn7jzXT0H7IAQ&_nc_ss=7a22e&_nc_zt=28&oh=00_Af9OcgjAT8xs5hu_6SWjlu68KZrRQJ40y518gJ2DwAwDFw&oe=6A2A2BED",
+          "downloadedVideoPath": "downloads/instagram/upstox.pro/DZU9LPxBTsj.mp4",
+          "caption": "Wrong gym partner❌ Right market lesson ✅ \n\n[bull and bear , stock market , trading, investments , SIP, stocks, nifty, relatable reels , funny, AI videos, funny ai videos , bullish market, bearish market, bull run]",
+          "postedAt": "2026-06-08T14:02:39.000Z",
+          "views": 5961,
+          "likes": 250,
+          "commentsCount": 17,
+          "contentType": "reel",
+          "comments": []
+        },
+        {
+          "id": "3913310238955010953",
+          "shortcode": "DZO3u3Az_uJ",
+          "account": "@upstox.pro",
+          "accountName": "Upstox",
+          "followers": 320895,
+          "url": "https://www.instagram.com/p/DZO3u3Az_uJ/",
+          "thumbnailUrl": "https://instagram.fagr1-4.fna.fbcdn.net/v/t51.71878-15/717298273_965842459561658_8629537890111450516_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_tt6&_nc_ht=instagram.fagr1-4.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2gHqG_UtBtHVa9H7jqa-4nozJY9eLipZiHctvNDWJ0vGRWTJvYiKnaA7QqMVCy5xFN__EbLmDXDkcnkzq6by9PAD&_nc_ohc=PsSxZxsmaxYQ7kNvwH3hz0h&_nc_gid=H82ZllooxAn7jzXT0H7IAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af9bF9fwJQRql0KVX-GbYWlJKXIYbdO14jOAj0KyLKI7mw&oe=6A2E111B&_nc_sid=8b3546",
+          "videoUrl": "https://instagram.fagr1-2.fna.fbcdn.net/o1/v/t2/f2/m86/AQNuOjDI6GFSWwIUtECsediBZ_T4P92uRVl0OAvm60r_YvubBcq_lUD32X-fdnIv_hHBjHSThn30ufy0KyOkuA0gyi4NF9O2OQd9m04.mp4?_nc_cat=100&_nc_oc=Adp7UGSHlWSC1qczVHlwUWl7b4vjzi6Ag-4emcgEefw9ipU2v8zpfaWtNkmhDjODSAJ-OQcSCvveZxD7GW7oE_vi&_nc_sid=5e9851&_nc_ht=instagram.fagr1-2.fna.fbcdn.net&_nc_ohc=xtCvP65VEJkQ7kNvwGfNQdY&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6OTA2ODY5MDY5MDc1NDk0LCJhc3NldF9hZ2VfZGF5cyI6MywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjI3LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=d8e47c8fe64ba555&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8wOTQ1NkJGNTY5Qjc1NDZGQjJFRkI5RUVFNkNBQ0RCQ192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzY1NDI4NzJGNjRFOUMzNUZEM0JGOEE4RjlENUY1MTkzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbM0MKL3bKcAxUCKAJDMywXQDtAAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=H82ZllooxAn7jzXT0H7IAQ&_nc_ss=7a22e&_nc_zt=28&oh=00_Af-_6JL_8BXHYW2WKy05M_d2Nya6JhnhnlgiPb8A04YHGg&oe=6A2A1A81",
+          "downloadedVideoPath": "downloads/instagram/upstox.pro/DZO3u3Az_uJ.mp4",
+          "caption": "Raise your hand if 9:15 matters more than 9:00 🙋‍♂️\n\n[ upstox, traders, corporate life, 2 jobs, bull bear, meetings, stock market, office, locked in, trading ]",
+          "postedAt": "2026-06-06T05:19:04.000Z",
+          "views": 1504,
+          "likes": 135,
+          "commentsCount": 9,
+          "contentType": "reel",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "handle": "@angelone",
+      "fetchedAt": "2026-06-09T17:28:26.015Z",
+      "source": "instagram_web",
+      "posts": [
+        {
+          "id": "3915049726554052485",
+          "shortcode": "DZVDPvFPpeF",
+          "account": "@angelone",
+          "accountName": "Angel One",
+          "followers": 2611814,
+          "url": "https://www.instagram.com/p/DZVDPvFPpeF/",
+          "thumbnailUrl": "https://instagram.fagr1-1.fna.fbcdn.net/v/t51.71878-15/720050850_27230440913281064_3023679163695187173_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_tt6&_nc_ht=instagram.fagr1-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2gFf3kgB9eKUOU1CFgRiyC3k0qcU-Qrk3TSK35ikeXZiE71Cvp-tUG9F0uKuGMy55hDuQqsaRW2rU96WycNsVTsR&_nc_ohc=8dQLeftukbwQ7kNvwHD3Rm-&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af-gu2GCnNXtEsw_9BgMA3i5Mhl3RAXCja0kU0d1Mlc9fQ&oe=6A2E2563&_nc_sid=8b3546",
+          "videoUrl": "https://instagram.fagr1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQMTFLmhTWfpSJ9J-8Syy968R6EzG5BMegFPfn_cCYK3Fwk0mdKvMLvMZ8xzsmnDIKUSxT7zi3E8k3GpH9ZynGCw0YY8SwtoSiurhTg.mp4?_nc_cat=105&_nc_oc=AdqDf4148cMjVUbGi_-14_tgFprWK3XWohzK6SkNc0dGaq_dFHKrdbkz3NWJuSXh0MNI-fu8RZqve6AXqRZM6-wG&_nc_sid=5e9851&_nc_ht=instagram.fagr1-1.fna.fbcdn.net&_nc_ohc=6-ct-gt49ewQ7kNvwFDNNO1&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTQ0NTcxODI1MzkwOTM0NywiYXNzZXRfYWdlX2RheXMiOjEsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoxNDYsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5d71f42cbc54e577&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9FMzRFOTZDM0E3NTNFMkZFMTNGOUExRTY0NDJBM0M5Nl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0FGNENCNjA4N0U3RUE2MDdERTNCNjgxNDU1M0Q1REI3X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbG1cGv8LeRBRUCKAJDMywXQGJR64UeuFIYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&_nc_ss=7a22e&_nc_zt=28&oh=00_Af-tyKeiKR6OQ4GjzZqBNx8oauLlCyxMW4iynVQvZALphg&oe=6A2A44E2",
+          "downloadedVideoPath": "downloads/instagram/angelone/DZVDPvFPpeF.mp4",
+          "caption": "Gold is often called the ultimate safe haven.\n\nBut 2026 is a reminder that it is not a one-way trade.\n\nWhen wars fuel inflation and inflation keeps interest rates elevated, gold can lose one of its biggest advantages: relative attractiveness.",
+          "postedAt": "2026-06-08T14:59:43.000Z",
+          "views": 1505,
+          "likes": 92,
+          "commentsCount": 4,
+          "contentType": "reel",
+          "comments": []
+        },
+        {
+          "id": "3912823957966681881",
+          "shortcode": "DZNJKijPfcZ",
+          "account": "@angelone",
+          "accountName": "Angel One",
+          "followers": 2611814,
+          "url": "https://www.instagram.com/p/DZNJKijPfcZ/",
+          "thumbnailUrl": "https://instagram.fagr1-2.fna.fbcdn.net/v/t51.71878-15/717076243_4470123263307288_8135314533987534604_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_tt6&_nc_ht=instagram.fagr1-2.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2gFf3kgB9eKUOU1CFgRiyC3k0qcU-Qrk3TSK35ikeXZiE71Cvp-tUG9F0uKuGMy55hDuQqsaRW2rU96WycNsVTsR&_nc_ohc=w7EjfJrkHfQQ7kNvwExYflg&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af8DQGFgNmiHansMVbLYN9bMHpSHjstntqWN39VDp_8vzg&oe=6A2E26BD&_nc_sid=8b3546",
+          "videoUrl": "https://instagram.fagr1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQOPI1BMnQYS8eDYCMG68wtZnnU_SNjix_I9oAnA3Gfn008l3dxTrNA4fJUzoMMV_lQLAY8aBv267aVyQmGcB7HxFlwImw6FDXL0bYA.mp4?_nc_cat=110&_nc_oc=AdpazQKhzTUdpnfpI8Dr-Iahu_XqwWurZ5ZMl6Us16VnERkw_SV3TBttbliuBzae9U4kmFx-EnTmXT1P-RmgrfhH&_nc_sid=5e9851&_nc_ht=instagram.fagr1-1.fna.fbcdn.net&_nc_ohc=051vSLkf1rkQ7kNvwG2mGOh&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTMxMzY3OTMyNzA1MjkwNiwiYXNzZXRfYWdlX2RheXMiOjQsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjo0NSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=629554d1098238f&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9FNjQxN0M3QUIzMjlBOEU2NDIzODNFQjUwRTVEQzFCQ192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0IwNDI2QUM1MTI3QTE1MkIwQ0FFODA5NTlGNjFFMUEzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbUkZrambLVBBUCKAJDMywXQEbqn752yLQYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&_nc_ss=7a22e&_nc_zt=28&oh=00_Af-lG_JW_DG8OxqWxygEk8RYpvdQ7PCViso_P8prGlVKdw&oe=6A2A359B",
+          "downloadedVideoPath": "downloads/instagram/angelone/DZNJKijPfcZ.mp4",
+          "caption": "India’s median age is 29. \nThe US is 38. China is 39. Germany is 46.\n\nEvery economy ahead of India on the global GDP list is significantly older.\n\nA younger population means more workers, more consumers, more compounding for longer.",
+          "postedAt": "2026-06-05T13:10:49.000Z",
+          "views": 8963,
+          "likes": 307,
+          "commentsCount": 1,
+          "contentType": "reel",
+          "comments": []
+        },
+        {
+          "id": "3911352140772964476",
+          "shortcode": "DZH6gx-PHh8",
+          "account": "@angelone",
+          "accountName": "Angel One",
+          "followers": 2611814,
+          "url": "https://www.instagram.com/p/DZH6gx-PHh8/",
+          "thumbnailUrl": "https://instagram.fagr1-1.fna.fbcdn.net/v/t51.71878-15/713083361_2037287056867985_6835669401124303122_n.jpg?stp=c0.248.640.640a_dst-jpg_e15_tt6&_nc_ht=instagram.fagr1-1.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2gFf3kgB9eKUOU1CFgRiyC3k0qcU-Qrk3TSK35ikeXZiE71Cvp-tUG9F0uKuGMy55hDuQqsaRW2rU96WycNsVTsR&_nc_ohc=t-uL21zDQL8Q7kNvwFXw3jQ&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af_axGfS1gw95lY3OGcpwENwLRbjz3HFdbfoaMf_oHiZ1Q&oe=6A2E179B&_nc_sid=8b3546",
+          "videoUrl": "https://instagram.fagr1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNtragDxuh7pHTVGeTwm8foUUVMeRDQF7ZlkuOpORQoxXjyDyp6AwT60OhYVxOZ2vsDOLBPilONLp9Jfl6lxjbz5fYex_8N0HVyumE.mp4?_nc_cat=104&_nc_oc=AdrtTxO_KsiBnx6HK118Od22tfmpH7HH64z7M5IJcUIZms9LFNSCWoZpt9fr5o5FjNY7BPPObO2QbVQ2J3WLi11c&_nc_sid=5e9851&_nc_ht=instagram.fagr1-1.fna.fbcdn.net&_nc_ohc=5wTooKnTEpgQ7kNvwGGClC1&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjQ4MjI4MzcxNTU3MDc5MSwiYXNzZXRfYWdlX2RheXMiOjYsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoxNzcsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=46baa9142f614912&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8yNzRERjE0QTY3NTUzMDA5NEIzQzk1MUMzQTk3OUQ5NF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0Y5NDMzRTJBM0U1NkY1NTM2Nzk1QTYzNENBRjBCRkFBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbOscnx9ufoCBUCKAJDMywXQGYlHrhR64UYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=0Y18dbyH8MhoFwlLzu3jiA&_nc_ss=7a22e&_nc_zt=28&oh=00_Af_63EAGFlvPZhpmIm1yIrRf-PUeeTCgjiPI5OKhUly4fQ&oe=6A2A29D1",
+          "downloadedVideoPath": "downloads/instagram/angelone/DZH6gx-PHh8.mp4",
+          "caption": "India earned roughly $860 billion from goods and services exports in 2025.\n\nSurprisingly, the split was almost 50:50.\n\nThat’s a rare feat. Most major exporting economies tend to be dominated by either goods (like China and Vietnam) or services.\n\nSo what has enabled India to strike this balance?\n\nHere’s all you need to know about India’s manufacturing sector.",
+          "postedAt": "2026-06-03T12:27:48.000Z",
+          "views": 2671,
+          "likes": 165,
+          "commentsCount": 2,
+          "contentType": "reel",
+          "comments": []
+        }
+      ]
+    }
+  ],
+  "fetchErrors": []
+}

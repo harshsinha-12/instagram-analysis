@@ -2,7 +2,26 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { BarChart3, FileText, Loader2, LucideIcon, PlayCircle } from "lucide-react";
+import { BarChart3, FileVideo, Loader2, LucideIcon, PlayCircle } from "lucide-react";
+import { analysisConfig } from "@/lib/analysis-config";
+
+const highlights: Array<{ title: string; detail: string; Icon: LucideIcon }> = [
+  {
+    title: "Instagram web fetch",
+    detail: "Public post metrics and available videos are fetched through one scraper adapter.",
+    Icon: FileVideo
+  },
+  {
+    title: "Math before AI",
+    detail: "Relative views, engagement, velocity, and outlier selection.",
+    Icon: BarChart3
+  },
+  {
+    title: "Live progress",
+    detail: "SSE stream keeps the analysis flow visible while jobs run.",
+    Icon: Loader2
+  }
+];
 
 export default function HomePage() {
   const router = useRouter();
@@ -30,6 +49,11 @@ export default function HomePage() {
         platform: "Instagram",
         contentType: formData.get("contentType"),
         lookbackDays: Number(formData.get("lookbackDays")),
+        dateFrom: formData.get("dateFrom"),
+        dateTo: formData.get("dateTo"),
+        postsToFetchPerCompetitor: Number(formData.get("postsToFetchPerCompetitor")),
+        topPostsToSelect: Number(formData.get("topPostsToSelect")),
+        reelsToAnalyze: Number(formData.get("reelsToAnalyze")),
         industry: formData.get("industry"),
         targetAudience: formData.get("targetAudience"),
         brandTone: formData.get("brandTone"),
@@ -66,24 +90,24 @@ export default function HomePage() {
           <div className="grid gap-4 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-medium">
               Brand
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brand" defaultValue="Groww" required />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brand" defaultValue={analysisConfig.brand.name} required />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Brand handle
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandHandle" defaultValue="@groww" required />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandHandle" defaultValue={analysisConfig.brand.instagramHandle} required />
             </label>
             <label className="grid gap-2 text-sm font-medium md:col-span-2">
               Competitors
               <input
                 className="focus-ring rounded-md border border-line px-3 py-2"
                 name="competitors"
-                defaultValue="@zerodha, @angelone_official, @upstox"
+                defaultValue={analysisConfig.competitors.map((competitor) => competitor.instagramHandle).join(", ")}
                 required
               />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Lookback
-              <select className="focus-ring rounded-md border border-line px-3 py-2" name="lookbackDays" defaultValue="30">
+              <select className="focus-ring rounded-md border border-line px-3 py-2" name="lookbackDays" defaultValue={analysisConfig.collection.lookbackDays}>
                 <option value="7">7 days</option>
                 <option value="14">14 days</option>
                 <option value="30">30 days</option>
@@ -92,35 +116,65 @@ export default function HomePage() {
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Content type
-              <select className="focus-ring rounded-md border border-line px-3 py-2" name="contentType" defaultValue="reels">
+              <select className="focus-ring rounded-md border border-line px-3 py-2" name="contentType" defaultValue={analysisConfig.collection.contentType}>
                 <option value="reels">Reels</option>
                 <option value="posts">Posts</option>
                 <option value="both">Both</option>
               </select>
             </label>
             <label className="grid gap-2 text-sm font-medium">
+              Date from
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateFrom" type="date" defaultValue={analysisConfig.collection.dateFrom} />
+            </label>
+            <label className="grid gap-2 text-sm font-medium">
+              Date to
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateTo" type="date" defaultValue={analysisConfig.collection.dateTo} />
+            </label>
+            <label className="grid gap-2 text-sm font-medium">
+              Posts to fetch per competitor
+              <input
+                className="focus-ring rounded-md border border-line px-3 py-2"
+                name="postsToFetchPerCompetitor"
+                type="number"
+                min="1"
+                defaultValue={analysisConfig.collection.postsToFetchPerCompetitor}
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium">
+              Top posts to select
+              <input
+                className="focus-ring rounded-md border border-line px-3 py-2"
+                name="topPostsToSelect"
+                type="number"
+                min="1"
+                defaultValue={analysisConfig.selection.topPostsToSelect}
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium">
+              Reels to analyze
+              <input
+                className="focus-ring rounded-md border border-line px-3 py-2"
+                name="reelsToAnalyze"
+                type="number"
+                min="1"
+                defaultValue={analysisConfig.selection.reelsToAnalyze}
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium">
               Industry
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="industry" defaultValue="Fintech / Investing" />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="industry" defaultValue={analysisConfig.brand.industry} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Target audience
-              <input
-                className="focus-ring rounded-md border border-line px-3 py-2"
-                name="targetAudience"
-                defaultValue="Young Indian retail investors aged 22-35"
-              />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="targetAudience" defaultValue={analysisConfig.brand.targetAudience} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Brand tone
-              <input
-                className="focus-ring rounded-md border border-line px-3 py-2"
-                name="brandTone"
-                defaultValue="Simple, trustworthy, beginner-friendly"
-              />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandTone" defaultValue={analysisConfig.brand.tone} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Avoid
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandAvoid" defaultValue="Jargon, aggressive CTAs, complexity" />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandAvoid" defaultValue={analysisConfig.brand.avoid} />
             </label>
           </div>
 
@@ -148,20 +202,3 @@ export default function HomePage() {
     </main>
   );
 }
-  const highlights: Array<{ title: string; detail: string; Icon: LucideIcon }> = [
-    {
-      title: "Manual CSV first",
-      detail: "Demo-safe data source adapter before scraper dependencies.",
-      Icon: FileText
-    },
-    {
-      title: "Math before AI",
-      detail: "Relative views, engagement, velocity, and outlier selection.",
-      Icon: BarChart3
-    },
-    {
-      title: "Live progress",
-      detail: "SSE stream keeps the analysis flow visible while jobs run.",
-      Icon: Loader2
-    }
-  ];

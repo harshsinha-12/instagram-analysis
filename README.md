@@ -8,7 +8,7 @@ The current build focuses on the demo-safe Phase 1 path:
 - SSE-powered live progress page
 - deterministic public-metric scoring with relative views, engagement, velocity, comment rate, and like rate
 - top reel report with competitor overview, winning patterns, suggested reel ideas, JSON export, and print-to-PDF
-- scraper adapter stubs so manual CSV, Apify, RapidAPI, and Meta Ads Library stay isolated from analysis logic
+- Instagram web scraper adapter plus Meta Ads Library extension point isolated from analysis logic
 
 ## Run locally
 
@@ -37,7 +37,6 @@ app/
   jobs/[id]/page.tsx                live progress UI
   reports/[id]/page.tsx             dashboard/report UI
 components/                         report and chart components
-data/sample-instagram-posts.csv     manual CSV demo data shape
 lib/
   sample-data.ts                    in-memory demo posts
   scoring.ts                        deterministic ranking math
@@ -46,17 +45,14 @@ lib/
   jobs.ts                           in-memory job store
 scrapers/
   base-scraper.interface.ts         scraper contract
-  csv-import.ts                     demo data source adapter
-  apify-scraper.ts                  production integration stub
-  rapidapi-scraper.ts               production integration stub
+  instagram-web-scraper.ts          active Instagram public web scraper adapter
   meta-ads-scraper.ts               phase-two stub
 ```
 
 ## Next Production Steps
 
 1. Replace `lib/mock-ai.ts` with Anthropic structured output calls.
-2. Replace `lib/sample-data.ts` with `CsvImportScraper` reading uploaded CSV files.
+2. Wire `InstagramWebScraper` into the analysis job runner in place of `lib/sample-data.ts`.
 3. Add Prisma models from `plan.md` and move the in-memory job store into PostgreSQL.
 4. Add BullMQ/Redis for long-running media and AI jobs.
-5. Wire Apify or another licensed data provider behind `InstagramScraper`.
-6. Add media processing with `yt-dlp`, `ffmpeg`, and Deepgram fallback flags.
+5. Add media processing with `yt-dlp`, `ffmpeg`, and Deepgram fallback flags.
