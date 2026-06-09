@@ -35,6 +35,37 @@ export type RawPost = {
   commentsCount: number;
   contentType: "reel" | "post";
   comments: string[];
+  rawData?: unknown;
+};
+
+export type Transcript = {
+  text: string;
+  language?: string;
+  durationSeconds?: number;
+  provider: "openai" | "fallback";
+  model?: string;
+  error?: string;
+};
+
+export type FrameDescription = {
+  framePath: string;
+  timestampSeconds: number;
+  description: string;
+  model?: string;
+  error?: string;
+};
+
+export type MediaArtifacts = {
+  postId: string;
+  shortcode: string;
+  videoPath?: string;
+  audioPath?: string;
+  videoDurationSeconds?: number;
+  audioDurationSeconds?: number;
+  framePaths: string[];
+  transcript?: Transcript;
+  frameDescriptions: FrameDescription[];
+  errors: string[];
 };
 
 export type ScoredPost = RawPost & {
@@ -80,6 +111,7 @@ export type PostAnalysis = {
 
 export type AnalyzedPost = ScoredPost & {
   analysis: PostAnalysis;
+  media?: MediaArtifacts;
 };
 
 export type Pattern = {
@@ -103,9 +135,14 @@ export type ReelIdea = {
 
 export type Report = {
   id: string;
+  runId?: string;
   input: AnalysisInput;
   createdAt: string;
   rawDataPath?: string;
+  scoredDataPath?: string;
+  mediaDataPath?: string;
+  aiDataPath?: string;
+  reportDataPath?: string;
   fetchErrors?: Array<{ handle: string; error: string }>;
   competitors: Array<{
     handle: string;
@@ -133,3 +170,5 @@ export type ProgressEvent = {
   totalSteps: number;
   reportId?: string;
 };
+
+export type ProgressCallback = (message: string) => void | Promise<void>;

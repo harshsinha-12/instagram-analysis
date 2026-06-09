@@ -1,4 +1,4 @@
-import { completeJob, getJob, getProgressEvents } from "@/lib/jobs";
+import { completeJob, getJob } from "@/lib/jobs";
 
 const encoder = new TextEncoder();
 
@@ -19,14 +19,36 @@ export async function GET(_request: Request, { params }: { params: { id: string 
 
   const stream = new ReadableStream({
     async start(controller) {
-      const events = getProgressEvents(job.input, params.id);
+      let step = 1;
+      const totalSteps = 8;
 
-      for (const event of events) {
-        if (event.status === "completed") {
-          await completeJob(params.id);
-        }
-        controller.enqueue(sse(event));
-        await wait(650);
+      controller.enqueue(sse({ status: "running", message: `Job created for ${job.input.brand}`, step, totalSteps }));
+
+      try {
+        const completed = await completeJob(params.id, async (message) => {
+          step += 1;
+          controller.enqueue(sse({ status: "running", message, step: Math.min(step, totalSteps - 1), totalSteps }));
+          await wait(100);
+        });
+
+        controller.enqueue(
+          sse({
+            status: "completed",
+            message: "Done. Report ready.",
+            step: totalSteps,
+            totalSteps,
+            reportId: completed?.report?.id ?? params.id
+          })
+        );
+      } catch (error) {
+        controller.enqueue(
+          sse({
+            status: "failed",
+            message: error instanceof Error ? error.message : "Analysis failed.",
+            step,
+            totalSteps
+          })
+        );
       }
 
       controller.close();

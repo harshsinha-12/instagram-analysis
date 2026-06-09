@@ -54,7 +54,7 @@ Fetch real competitor posts
 
 Remove remaining demo-only data paths.
 
-- Delete `lib/sample-data.ts` once no import references remain.
+- Done: `lib/sample-data.ts` and `lib/mock-ai.ts` have been removed.
 - Keep `downloads/instagram/runs` as the local raw artifact store for now.
 - Add a clear saved run shape:
 
@@ -199,16 +199,16 @@ Needed:
 
 Comment analysis should not block the report.
 
-## 7. Replace `mock-ai.ts`
+## 7. OpenAI Creative Analysis Agent
 
-`lib/mock-ai.ts` is intentionally generic placeholder logic. Stage 2 should replace it with a real structured AI analyzer.
+The old placeholder analyzer has been replaced by the `__agents__`, `__tools__`, and `__prompts__` pipeline. The next work is hardening model behavior and progress reporting.
 
 Needed:
 
-- Add the official `openai` npm package.
-- Add `lib/ai/openai-client.ts` that reads `OPENAI_API_KEY` and model env vars.
-- Add `lib/ai/schemas.ts` for the 6-dimension per-post schema from `plan.md`.
-- Add `lib/ai/post-analyzer.ts`.
+- Keep prompt/schema files in `__prompts__`.
+- Keep OpenAI/network helpers in `__tools__`.
+- Keep orchestration in `__agents__`.
+- Validate every model response against the per-post schema from `plan.md`.
 - Input:
   - post metrics
   - caption
@@ -367,13 +367,12 @@ Organic winners vs paid creative direction
 
 Recommended next sequence:
 
-1. Remove `lib/sample-data.ts` and any obsolete sample-data references.
-2. Make saved run files structured as `uuid-run-1-raw.json`, `uuid-run-2-scored.json`, etc.
-3. Make SSE progress reflect actual fetch/scoring/report steps.
-4. Add media processor with `ffmpeg` frame/audio extraction.
-5. Add OpenAI transcription fallback.
-6. Add real OpenAI post analyzer and schema validation.
-7. Replace static pattern/reel idea generation with AI aggregation.
+1. Make SSE progress reflect actual fetch/scoring/media/AI/report steps.
+2. Add comment fetching if a reliable public endpoint is found.
+3. Harden OpenAI schema validation and retry behavior.
+4. Add reel deep-dive page.
+5. Add persistent database only after the local pipeline is stable.
+6. Add Meta Ads Library analyzer as Phase 2.
 8. Add reel deep-dive page.
 9. Add persistent database only after the local pipeline is stable.
 10. Add Meta Ads Library analyzer as Phase 2.
@@ -382,6 +381,6 @@ Recommended next sequence:
 
 - Instagram public endpoints can break or rate-limit; scraper errors need to be visible and non-fatal.
 - Live report generation happens inside request flow; long AI/media work needs background jobs.
-- `mock-ai.ts` is not real analysis; the product value is blocked until this is replaced.
-- No transcript/frame/comment intelligence yet, so the system cannot truly explain creative performance.
+- Comment text is still usually unavailable; comment intelligence is limited to counts unless fetching is added.
+- Live OpenAI/media work still happens during report generation; long jobs need background execution.
 - No persistent DB; reports can disappear on server restart except for raw JSON artifacts.

@@ -63,7 +63,7 @@ function requestHeaders(referer = "https://www.instagram.com/") {
 }
 
 async function fetchJson<T>(url: string, referer?: string): Promise<T> {
-  const response = await fetch(url, { headers: requestHeaders(referer) });
+  const response = await fetch(url, { headers: requestHeaders(referer), cache: "no-store" });
   if (!response.ok) {
     const body = await response.text();
     throw new Error(`Instagram request failed: ${response.status} ${response.statusText}\n${body.slice(0, 300)}`);
@@ -72,7 +72,7 @@ async function fetchJson<T>(url: string, referer?: string): Promise<T> {
 }
 
 async function fetchText(url: string) {
-  const response = await fetch(url, { headers: requestHeaders(url) });
+  const response = await fetch(url, { headers: requestHeaders(url), cache: "no-store" });
   if (!response.ok) return "";
   return response.text();
 }
@@ -162,7 +162,7 @@ function isWithinDateWindow(postedAt: string, input: ScraperInput) {
 }
 
 async function downloadVideo(videoUrl: string, destination: string) {
-  const response = await fetch(videoUrl, { headers: requestHeaders("https://www.instagram.com/") });
+  const response = await fetch(videoUrl, { headers: requestHeaders("https://www.instagram.com/"), cache: "no-store" });
   if (!response.ok || !response.body) {
     throw new Error(`Video download failed: ${response.status} ${response.statusText}`);
   }
@@ -227,7 +227,8 @@ export class InstagramWebScraper implements InstagramScraper {
         likes: node.edge_liked_by?.count ?? node.edge_media_preview_like?.count ?? 0,
         commentsCount: node.edge_media_to_comment?.count ?? 0,
         contentType: node.is_video ? "reel" : "post",
-        comments: []
+        comments: [],
+        rawData: node
       });
     }
 

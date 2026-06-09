@@ -38,11 +38,12 @@ app/
   reports/[id]/page.tsx             dashboard/report UI
 components/                         report and chart components
 lib/
-  sample-data.ts                    in-memory demo posts
   scoring.ts                        deterministic ranking math
-  mock-ai.ts                        typed placeholder creative analysis
   report.ts                         report aggregation
   jobs.ts                           in-memory job store
+__agents__/                          staged analysis pipeline orchestration
+__tools__/                           OpenAI, media, logging, and fallback tools
+__prompts__/                         prompt builders and JSON schemas
 scrapers/
   base-scraper.interface.ts         scraper contract
   instagram-web-scraper.ts          active Instagram public web scraper adapter
@@ -51,7 +52,7 @@ scrapers/
 
 ## Next Production Steps
 
-1. Replace `lib/mock-ai.ts` with OpenAI Responses API structured output calls.
-2. Add media processing with `yt-dlp`, `ffmpeg`, and OpenAI transcription fallback flags.
-3. Add Prisma models from `plan.md` and move the in-memory job store into PostgreSQL.
-4. Add BullMQ/Redis for long-running media and AI jobs.
+1. Harden job progress so SSE events are emitted from actual agent milestones.
+2. Add Prisma models from `plan.md` and move the in-memory job store into PostgreSQL.
+3. Add BullMQ/Redis for long-running media and AI jobs.
+4. Add reel deep-dive pages and Meta Ads Library analysis.
