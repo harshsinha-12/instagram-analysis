@@ -51,8 +51,7 @@ scrapers/
 
 ## Next Production Steps
 
-1. Replace `lib/mock-ai.ts` with Anthropic structured output calls.
-2. Wire `InstagramWebScraper` into the analysis job runner in place of `lib/sample-data.ts`.
+1. Replace `lib/mock-ai.ts` with OpenAI Responses API structured output calls.
+2. Add media processing with `yt-dlp`, `ffmpeg`, and OpenAI transcription fallback flags.
 3. Add Prisma models from `plan.md` and move the in-memory job store into PostgreSQL.
 4. Add BullMQ/Redis for long-running media and AI jobs.
-5. Add media processing with `yt-dlp`, `ffmpeg`, and Deepgram fallback flags.
