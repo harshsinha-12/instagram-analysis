@@ -14,6 +14,16 @@ Turn the pattern into ideas the target account can adapt without copying.
 
 The app is account-agnostic. It can be used for brands, creators, founder accounts, publishers, communities, product accounts, education pages, consumer businesses, or any other public Instagram account where public post data is available.
 
+## Screenshots
+
+![Instagram Creative Intelligence Analyzer home screen](public/instagram-analyzer-home.png)
+
+![Instagram Creative Intelligence Analyzer analysis form](public/instagram-analyzer-form.png)
+
+![Instagram Creative Intelligence Analyzer progress view](public/instagram-analyzer-progress.png)
+
+![Instagram Creative Intelligence Analyzer report view](public/instagram-analyzer-report.png)
+
 ## What This Project Does
 
 - Accepts a target account context: account or brand name, handle, competitor/reference handles, content type, lookback window, date bounds, fetch count, analysis count, industry/category, audience, tone, and things to avoid.

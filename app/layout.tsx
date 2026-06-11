@@ -3,7 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Instagram Creative Intelligence",
-  description: "Competitor organic reel analysis and brand adaptation strategy."
+  description: "Competitor organic reel analysis and brand adaptation strategy.",
+  openGraph: {
+    images: ["/instagram-analyzer-form.png"]
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
