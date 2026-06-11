@@ -1,27 +1,30 @@
 import { AnalyzedPost } from "@/declaration";
-import { PlayCircle, FileText, CheckCircle2 } from "lucide-react";
+import { PlayCircle, FileText, CheckCircle2, X } from "lucide-react";
+import { useState } from "react";
 
 export function TopReelsAnalysisTable({ posts }: { posts: AnalyzedPost[] }) {
+  const [selectedTranscript, setSelectedTranscript] = useState<string | null>(null);
+
   if (!posts || posts.length === 0) return null;
 
   return (
     <section id="top-reels" className="mb-16 scroll-mt-12">
       <h2 className="text-2xl font-serif text-ink mb-6 border-b border-line pb-2">Top Performing Reels</h2>
-      <div className="overflow-x-auto border border-line bg-surface shadow-sm">
+      <div className="overflow-x-auto border border-line rounded-lg bg-surface shadow-sm">
         <table className="w-full text-left text-sm">
           <thead className="bg-paper border-b border-line sticky top-0">
             <tr>
-              <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Creative</th>
-              <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Account</th>
-              <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted font-sans text-right">Score</th>
-              <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted font-sans text-right">Views</th>
-              <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Hook & Strategy</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Creative</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Account</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted font-sans text-right">Score</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted font-sans text-right">Views</th>
+              <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-muted font-sans">Hook & Strategy</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-line">
             {posts.map((post, idx) => (
-              <tr key={idx} className="group hover:bg-black/5 transition-colors">
-                <td className="px-4 py-4 w-48 align-top">
+              <tr key={idx} className="group hover:bg-black-[0.02] transition-colors">
+                <td className="px-6 py-5 w-48 align-top">
                   {post.thumbnailUrl ? (
                     <img src={post.thumbnailUrl} alt="Thumbnail" className="w-full aspect-[9/16] object-cover rounded-md border border-line mb-3" />
                   ) : (
@@ -32,25 +35,28 @@ export function TopReelsAnalysisTable({ posts }: { posts: AnalyzedPost[] }) {
                       <PlayCircle className="w-3.5 h-3.5" /> Watch Reel
                     </a>
                     {post.analysis?.transcriptAvailable && (
-                      <button className="flex items-center gap-1.5 text-xs font-medium text-muted hover:text-ink transition-colors text-left">
+                      <button 
+                        onClick={() => setSelectedTranscript(post.media?.transcript?.text || "Transcript text not available in payload.")}
+                        className="flex items-center gap-1.5 text-xs font-medium text-muted hover:text-ink transition-colors text-left"
+                      >
                         <FileText className="w-3.5 h-3.5" /> View Transcript
                       </button>
                     )}
                   </div>
                 </td>
-                <td className="px-4 py-4 align-top">
-                  <span className="font-medium text-ink">@{post.account}</span>
+                <td className="px-6 py-5 align-top">
+                  <span className="font-medium text-ink">{post.account.startsWith('@') ? post.account : `@${post.account}`}</span>
                 </td>
-                <td className="px-4 py-4 align-top text-right">
+                <td className="px-6 py-5 align-top text-right">
                   <span className="inline-flex items-center justify-center bg-navy text-white font-bold px-2 py-1 rounded text-xs">
-                    {post.finalScore}
+                    {(post.finalScore * 100).toFixed(2)}
                   </span>
                 </td>
-                <td className="px-4 py-4 align-top text-right">
+                <td className="px-6 py-5 align-top text-right">
                   <span className="text-ink font-medium">{post.views > 1000 ? (post.views/1000).toFixed(1) + 'k' : post.views}</span>
                   <p className="text-[10px] text-muted mt-1">{(post.engagementRate * 100).toFixed(1)}% ER</p>
                 </td>
-                <td className="px-4 py-4 align-top min-w-[300px]">
+                <td className="px-6 py-5 align-top min-w-[300px]">
                   <div className="space-y-4">
                     <div>
                       <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted mb-1">Creative Hook</h4>
@@ -79,6 +85,28 @@ export function TopReelsAnalysisTable({ posts }: { posts: AnalyzedPost[] }) {
           </tbody>
         </table>
       </div>
+
+      {/* Transcript Modal */}
+      {selectedTranscript && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/80 backdrop-blur-sm">
+          <div className="bg-surface rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col border border-line">
+            <div className="flex items-center justify-between p-4 border-b border-line bg-paper rounded-t-xl">
+              <h3 className="font-bold text-ink">Video Transcript</h3>
+              <button 
+                onClick={() => setSelectedTranscript(null)} 
+                className="p-1 hover:bg-black/5 rounded text-muted hover:text-ink transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto">
+              <p className="text-sm text-ink whitespace-pre-wrap leading-relaxed font-sans">
+                {selectedTranscript}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

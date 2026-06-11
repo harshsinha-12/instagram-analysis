@@ -25,7 +25,7 @@ export function CompetitorBreakdownCards({ report }: { report: Report }) {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted">Best Score</p>
-                  <p className="font-medium text-ink">{competitor.bestScore}/100</p>
+                  <p className="font-medium text-ink">{(competitor.bestScore * 100).toFixed(2)}/100</p>
                 </div>
               </div>
             </div>

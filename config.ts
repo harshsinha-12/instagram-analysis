@@ -15,7 +15,7 @@ export const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
 export const OPENAI_TRANSCRIPTIONS_URL = "https://api.openai.com/v1/audio/transcriptions";
 
 export const DEFAULT_OPENAI_REASONING_MODEL = "gpt-5.5";
-export const DEFAULT_OPENAI_FAST_MODEL = "gpt-5.5-mini";
+export const DEFAULT_OPENAI_FAST_MODEL = "gpt-5.4-mini";
 export const DEFAULT_OPENAI_TRANSCRIBE_MODEL = "gpt-4o-transcribe";
 
 export const INSTAGRAM_WEB_PROFILE_INFO_URL =

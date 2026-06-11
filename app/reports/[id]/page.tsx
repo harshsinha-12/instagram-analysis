@@ -79,7 +79,7 @@ export default function ReportPage({ params }: { params: { id: string } }) {
         <span className="text-xs font-bold uppercase tracking-widest text-ink">Instagram Creative Intelligence</span>
       </div>
 
-      <main className="max-w-[1200px] mx-auto px-6 lg:px-12 pb-24 pt-8 md:pt-16">
+      <main className="w-full mx-auto px-6 lg:px-12 pb-24 pt-8 md:pt-16 overflow-x-auto">
         <ReportHeader report={report} />
 
         <div className="flex flex-col lg:flex-row gap-12 relative">

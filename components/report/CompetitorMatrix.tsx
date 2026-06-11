@@ -8,10 +8,10 @@ export function CompetitorMatrix({ matrixData, brand }: { matrixData: { points: 
     <section id="competitor-matrix" className="mb-16 scroll-mt-12 print-break-inside-avoid">
       <h2 className="text-2xl font-serif text-ink mb-6 border-b border-line pb-2">Competitor Positioning Matrix</h2>
       
-      <div className="bg-surface border border-line p-6">
+      <div className="relative bg-surface border border-line p-6 pl-12">
         <div className="h-[400px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" opacity={0.5} />
               <XAxis type="number" dataKey="x" name="Style" domain={[0, 100]} hide />
               <YAxis type="number" dataKey="y" name="Trust" domain={[0, 100]} hide />
@@ -47,8 +47,8 @@ export function CompetitorMatrix({ matrixData, brand }: { matrixData: { points: 
           <div className="absolute left-0 text-[10px] font-bold uppercase tracking-wider text-muted">Entertainment-led</div>
           <div className="absolute right-0 text-[10px] font-bold uppercase tracking-wider text-muted">Education-led</div>
         </div>
-        <div className="relative h-full flex items-center justify-between pointer-events-none" style={{ position: 'absolute', left: '-20px', top: '0', bottom: '0', width: '20px', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-          <div className="text-[10px] font-bold uppercase tracking-wider text-muted mt-auto mb-10">Low Trust</div>
+        <div className="absolute left-2 top-6 bottom-40 flex flex-col items-center justify-between pointer-events-none" style={{ width: '20px', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-muted mb-10">Low Trust</div>
           <div className="text-[10px] font-bold uppercase tracking-wider text-muted mt-10">High Trust</div>
         </div>
 

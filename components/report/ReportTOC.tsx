@@ -29,7 +29,7 @@ export function ReportTOC() {
           }
         });
       },
-      { rootMargin: "-20% 0px -80% 0px" }
+      { rootMargin: "-10% 0px -40% 0px" }
     );
 
     sections.forEach(({ id }) => {
@@ -43,15 +43,18 @@ export function ReportTOC() {
   return (
     <nav className="hidden lg:block sticky top-8 w-64 shrink-0 no-print">
       <h3 className="text-xs font-bold uppercase tracking-widest text-muted mb-4 px-3">Contents</h3>
-      <ul className="space-y-1">
+      <ul className="space-y-1 border-l border-line/50 ml-3">
         {sections.map((section) => (
-          <li key={section.id}>
+          <li key={section.id} className="relative">
+            {activeSection === section.id && (
+              <div className="absolute -left-px top-0 bottom-0 w-0.5 bg-leaf" />
+            )}
             <a
               href={`#${section.id}`}
-              className={`block px-3 py-2 text-sm rounded-md transition-colors ${
+              className={`block pl-6 pr-3 py-2 text-sm transition-colors ${
                 activeSection === section.id
-                  ? "bg-navy text-white font-medium shadow-sm"
-                  : "text-muted hover:text-ink hover:bg-black/5"
+                  ? "text-leaf font-bold"
+                  : "text-muted hover:text-ink hover:bg-black-[0.02]"
               }`}
             >
               {section.label}

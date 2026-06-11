@@ -102,7 +102,7 @@ export function AnalyzerForm() {
   };
 
   return (
-    <div id="analyzer-form" className="mx-auto max-w-7xl px-6 py-24 sm:py-32">
+    <div id="analyzer-form" className="w-full px-6 md:px-12 py-24 sm:py-32 overflow-x-auto">
       <div className="mb-12 text-center">
         <h2 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">Create a competitor analysis run</h2>
         <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">

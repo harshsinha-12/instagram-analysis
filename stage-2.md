@@ -23,14 +23,14 @@ Recommended defaults:
 
 ```txt
 OPENAI_REASONING_MODEL=gpt-5.5
-OPENAI_FAST_MODEL=gpt-5.5-mini
+OPENAI_FAST_MODEL=gpt-5.4-mini
 OPENAI_TRANSCRIBE_MODEL=gpt-4o-transcribe
 ```
 
 Usage:
 
 - `gpt-5.5` for per-post deep analysis, cross-competitor pattern aggregation, and brand recommendation generation.
-- `gpt-5.5-mini` for cheaper frame descriptions, comment clustering, and fallback quick summaries.
+- `gpt-5.4-mini` for cheaper frame descriptions, comment clustering, and fallback quick summaries.
 - `gpt-4o-transcribe` for audio transcription from extracted reel audio.
 
 Implementation should use the OpenAI Responses API with structured outputs for analysis JSON. Keep model names in environment variables so they can be changed without touching code.

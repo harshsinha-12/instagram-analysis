@@ -35,8 +35,8 @@ const features = [
 
 export function FeatureCards() {
   return (
-    <section id="product" className="bg-paper py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="product" className="bg-paper py-24 sm:py-32 w-full overflow-x-auto">
+      <div className="w-full px-6 md:px-12">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-leaf">What you get</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">

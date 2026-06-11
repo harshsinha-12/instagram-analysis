@@ -6,7 +6,7 @@ import Link from "next/link";
 export function MarketingNavbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-line bg-paper/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div className="flex w-full items-center justify-between px-6 md:px-12 py-4">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-leaf text-white">
             <BarChart3 className="h-4 w-4" />

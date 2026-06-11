@@ -25,9 +25,9 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="workflow" className="bg-surface py-24 sm:py-32 border-y border-line">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+    <section id="workflow" className="bg-surface py-24 sm:py-32 border-y border-line w-full overflow-x-auto">
+      <div className="w-full px-6 md:px-12">
+        <div className="w-full max-w-2xl text-center mx-auto">
           <h2 className="text-base font-semibold leading-7 text-coral">Workflow</h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
             From raw data to creative brief in 4 steps

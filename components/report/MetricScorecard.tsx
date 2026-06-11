@@ -1,8 +1,10 @@
 import { Report } from "@/declaration";
 
 export function MetricScorecard({ report }: { report: Report }) {
-  const topScore = Math.max(...report.topPosts.map(p => p.finalScore || 0));
-  const avgScore = Math.round(report.topPosts.reduce((acc, p) => acc + (p.finalScore || 0), 0) / (report.topPosts.length || 1));
+  const topScoreRaw = Math.max(...report.topPosts.map(p => p.finalScore || 0));
+  const avgScoreRaw = report.topPosts.reduce((acc, p) => acc + (p.finalScore || 0), 0) / (report.topPosts.length || 1);
+  const topScore = (topScoreRaw * 100).toFixed(2);
+  const avgScore = (avgScoreRaw * 100).toFixed(2);
   const topViews = Math.max(...report.topPosts.map(p => p.views || 0));
   const topEngRate = Math.max(...report.topPosts.map(p => p.engagementRate || 0));
   const formatNumber = (num: number) => num > 1000 ? (num / 1000).toFixed(1) + 'k' : num.toString();

@@ -5,9 +5,9 @@ import { ProductMockup } from "./ProductMockup";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-paper pb-20 pt-24 md:pt-32">
+    <section className="relative w-full bg-paper pb-20 pt-24 md:pt-32 overflow-x-auto">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
+      <div className="w-full px-6 md:px-12 relative z-10">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-8 items-center">
           <div className="max-w-2xl">
             <p className="inline-block rounded-full bg-leaf/10 px-3 py-1 text-sm font-semibold text-leaf mb-6">
