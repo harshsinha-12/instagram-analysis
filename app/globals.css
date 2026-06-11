@@ -12,8 +12,10 @@
 
 body {
   margin: 0;
-  background: #f7f6f2;
-  color: #172026;
+  background: #F8F7F3; /* paper */
+  color: #111827; /* ink */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button,
@@ -25,4 +27,31 @@ textarea {
 
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-leaf/30 focus:border-leaf;
+}
+
+@media print {
+  body {
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  .print-page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Ensure cards have borders in print */
+  .border, .border-line {
+    border-color: #cbd5e1 !important;
+  }
 }
