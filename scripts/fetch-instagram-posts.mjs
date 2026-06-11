@@ -17,6 +17,11 @@ function getAccountInput() {
   return process.argv.find((arg) => arg.startsWith("http") || arg.startsWith("@")) ?? DEFAULT_ACCOUNT_URL;
 }
 
+function logStep(message, details = {}) {
+  const suffix = Object.keys(details).length ? ` ${JSON.stringify(details)}` : "";
+  console.error(`[instagram-fetch] ${message}${suffix}`);
+}
+
 function extractUsername(input) {
   if (input.startsWith("@")) return input.slice(1);
   const url = new URL(input);
@@ -153,28 +158,69 @@ async function main() {
   await mkdir(outDir, { recursive: true });
 
   const profileUrl = `${WEB_PROFILE_INFO_URL}?username=${encodeURIComponent(username)}`;
+  logStep("starting profile fetch", {
+    username,
+    limit,
+    shouldDownload,
+    outDir,
+    hasSession: Boolean(process.env.IG_SESSIONID)
+  });
+
   const profile = await fetchJson(profileUrl, `https://www.instagram.com/${username}/`);
   const user = profile.data?.user;
   const edges = user?.edge_owner_to_timeline_media?.edges ?? [];
+
+  logStep("profile response received", {
+    username,
+    profileFound: Boolean(user),
+    timelineEdges: edges.length,
+    requestedLimit: limit,
+    followers: user?.edge_followed_by?.count ?? 0
+  });
 
   if (!user || edges.length === 0) {
     throw new Error(`No public posts found for ${username}. The account may be private, blocked, or rate-limited.`);
   }
 
   const posts = edges.slice(0, limit).map((edge) => normalizePost(edge.node));
+  logStep("selected posts from timeline edges", {
+    selectedPosts: posts.length,
+    limitedByInstagramResponse: edges.length < limit
+  });
 
+  let videosWithResolvedUrl = 0;
+  let videosMissingUrl = 0;
+  let videosDownloaded = 0;
   for (const post of posts) {
     if (post.isVideo && !post.videoUrl) {
+      logStep("resolving video url", { shortcode: post.shortcode });
       post.videoUrl = await fetchVideoUrl(post.shortcode, post.mediaId);
+    }
+    if (post.isVideo && post.videoUrl) videosWithResolvedUrl += 1;
+    if (post.isVideo && !post.videoUrl) {
+      videosMissingUrl += 1;
+      logStep("video url unavailable", { shortcode: post.shortcode });
     }
 
     if (shouldDownload && post.videoUrl) {
       const filename = `${post.shortcode}.mp4`;
       const destination = path.join(outDir, filename);
+      logStep("downloading video", { shortcode: post.shortcode, destination });
       await downloadVideo(post.videoUrl, destination);
       post.downloadedVideoPath = destination;
+      videosDownloaded += 1;
     }
   }
+
+  logStep("finished posts fetch", {
+    username,
+    requestedLimit: limit,
+    timelineEdges: edges.length,
+    postCount: posts.length,
+    videosWithResolvedUrl,
+    videosMissingUrl,
+    videosDownloaded
+  });
 
   const result = {
     username,

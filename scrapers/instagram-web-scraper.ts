@@ -4,6 +4,7 @@ import path from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { RawPost } from "@/declaration";
+import { logger } from "@/__tools__/tools__logger";
 import {
   INSTAGRAM_DEFAULT_OUTPUT_DIR,
   INSTAGRAM_WEB_PROFILE_INFO_URL
@@ -170,32 +171,77 @@ export class InstagramWebScraper implements InstagramScraper {
     }
 
     const profileUrl = `${INSTAGRAM_WEB_PROFILE_INFO_URL}?username=${encodeURIComponent(username)}`;
+    logger.info(
+      {
+        scraper: "instagram_web",
+        handle,
+        username,
+        limit,
+        contentType: input.contentType,
+        lookbackDays: input.lookbackDays,
+        dateFrom: input.dateFrom,
+        dateTo: input.dateTo,
+        downloadVideos: Boolean(input.downloadVideos)
+      },
+      "starting instagram profile fetch"
+    );
+
     const profile = await fetchJson<InstagramProfileResponse>(profileUrl, `https://www.instagram.com/${username}/`);
     const user = profile.data?.user;
     const edges = user?.edge_owner_to_timeline_media?.edges ?? [];
+
+    logger.info(
+      {
+        scraper: "instagram_web",
+        handle,
+        username,
+        profileFound: Boolean(user),
+        timelineEdges: edges.length,
+        followers: user?.edge_followed_by?.count ?? 0
+      },
+      "instagram profile fetch returned timeline edges"
+    );
 
     if (!user || edges.length === 0) {
       throw new Error(`No public posts found for ${username}. The account may be private, blocked, or rate-limited.`);
     }
 
     const posts: RawPost[] = [];
+    let skippedByContentType = 0;
+    let skippedByDateWindow = 0;
+    let videosWithResolvedUrl = 0;
+    let videosMissingUrl = 0;
+    let videosDownloaded = 0;
+
     for (const edge of edges) {
       if (posts.length >= limit) break;
 
       const node = edge.node;
-      if (input.contentType === "reels" && !node.is_video) continue;
-      if (input.contentType === "posts" && node.is_video) continue;
+      if (input.contentType === "reels" && !node.is_video) {
+        skippedByContentType += 1;
+        continue;
+      }
+      if (input.contentType === "posts" && node.is_video) {
+        skippedByContentType += 1;
+        continue;
+      }
 
       const postedAt = node.taken_at_timestamp ? new Date(node.taken_at_timestamp * 1000).toISOString() : new Date().toISOString();
-      if (!isWithinDateWindow(postedAt, input)) continue;
+      if (!isWithinDateWindow(postedAt, input)) {
+        skippedByDateWindow += 1;
+        continue;
+      }
 
       let videoUrl = node.video_url ?? "";
       if (node.is_video && !videoUrl) {
         videoUrl = await fetchVideoUrl(node.shortcode, node.id);
       }
+      if (node.is_video && videoUrl) videosWithResolvedUrl += 1;
+      if (node.is_video && !videoUrl) videosMissingUrl += 1;
 
       if (input.downloadVideos && videoUrl) {
         await downloadVideo(videoUrl, path.join(outputDir, `${node.shortcode}.mp4`));
+        videosDownloaded += 1;
       }
 
       posts.push({
@@ -218,6 +264,23 @@ export class InstagramWebScraper implements InstagramScraper {
         rawData: node
       });
     }
+
+    logger.info(
+      {
+        scraper: "instagram_web",
+        handle,
+        username,
+        requestedLimit: limit,
+        timelineEdges: edges.length,
+        returnedPosts: posts.length,
+        skippedByContentType,
+        skippedByDateWindow,
+        videosWithResolvedUrl,
+        videosMissingUrl,
+        videosDownloaded
+      },
+      "finished instagram post fetch"
+    );
 
     return {
       handle,

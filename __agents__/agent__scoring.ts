@@ -1,5 +1,7 @@
 import { scorePosts } from "@/lib/scoring";
 import { AnalysisInput, RawPost } from "@/declaration";
+import { logger } from "@/__tools__/tools__logger";
+import { AGENT_SCORING } from "@/config";
 
 function getDateRange(input: AnalysisInput) {
   const dateFrom = input.dateFrom ? new Date(input.dateFrom) : null;
@@ -29,6 +31,34 @@ export function runScoringAgent(input: AnalysisInput, fetchedPosts: RawPost[]) {
     .filter((post) => isInsideDateRange(post, dateRange))
     .slice(0, maxPosts);
 
-  if (posts.length === 0) return [];
-  return scorePosts(posts);
+  if (posts.length === 0) {
+    logger.warn(
+      {
+        agent: AGENT_SCORING,
+        fetchedPosts: fetchedPosts.length,
+        postsAfterDateFilterAndLimit: posts.length,
+        maxPosts,
+        dateFrom: input.dateFrom,
+        dateTo: input.dateTo
+      },
+      "no posts available for scoring"
+    );
+    return [];
+  }
+
+  const scored = scorePosts(posts);
+  logger.info(
+    {
+      agent: AGENT_SCORING,
+      fetchedPosts: fetchedPosts.length,
+      postsAfterDateFilterAndLimit: posts.length,
+      maxPosts,
+      scoredPosts: scored.length,
+      dateFrom: input.dateFrom,
+      dateTo: input.dateTo
+    },
+    "scoring completed"
+  );
+
+  return scored;
 }
