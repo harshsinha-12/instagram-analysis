@@ -1,6 +1,7 @@
 import { AnalysisInput, JobStatus, ProgressCallback, Report } from "@/declaration";
 import { buildReport } from "@/lib/report";
 import { DEFAULT_ANALYSIS_INPUT } from "@/config";
+import { loadSampleReportJson } from "@/lib/run-storage";
 
 type Job = {
   id: string;
@@ -48,5 +49,13 @@ export async function getReport(id: string): Promise<Report> {
   if (existing) {
     return (await completeJob(id))?.report ?? buildReport(existing.input, id);
   }
+
+  if (id === "demo-report" || id === "sample") {
+    const savedSample = await loadSampleReportJson(id);
+    if (savedSample) {
+      return savedSample;
+    }
+  }
+
   return buildReport(DEFAULT_ANALYSIS_INPUT, id);
 }

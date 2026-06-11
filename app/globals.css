@@ -30,10 +30,20 @@ textarea {
 }
 
 @media print {
+  @page {
+    margin: 16mm 12mm 18mm;
+  }
+
   body {
     background: white;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  main {
+    overflow: visible !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
   
   .no-print {
@@ -53,5 +63,99 @@ textarea {
   /* Ensure cards have borders in print */
   .border, .border-line {
     border-color: #cbd5e1 !important;
+  }
+
+  .top-reels-print-section {
+    break-before: page;
+    page-break-before: always;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .top-reels-print-wrap {
+    overflow: visible !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .top-reels-print-table {
+    width: 100% !important;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 10px !important;
+    line-height: 1.35;
+  }
+
+  .top-reels-print-table thead {
+    display: table-header-group;
+    position: static !important;
+  }
+
+  .top-reels-print-table tbody {
+    display: table-row-group;
+  }
+
+  .top-reels-print-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .top-reels-print-table th,
+  .top-reels-print-table td {
+    padding: 8px !important;
+    vertical-align: top;
+    overflow: visible !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .top-reels-print-table p,
+  .top-reels-print-table span,
+  .top-reels-print-table h4 {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .top-reels-print-table h4 {
+    font-size: 8px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .top-reels-print-table p {
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+  }
+
+  .top-reels-print-table .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 8px !important;
+  }
+
+  .top-reels-print-creative {
+    width: 74px !important;
+  }
+
+  .top-reels-print-account {
+    width: 112px !important;
+  }
+
+  .top-reels-print-score {
+    width: 74px !important;
+  }
+
+  .top-reels-print-views {
+    width: 72px !important;
+  }
+
+  .top-reels-print-strategy {
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  .top-reels-print-thumb {
+    width: 50px !important;
+    height: 88px !important;
+    aspect-ratio: auto !important;
+    margin-bottom: 0 !important;
+    object-fit: cover;
   }
 }

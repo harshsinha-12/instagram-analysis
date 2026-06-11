@@ -24,6 +24,12 @@ The app is account-agnostic. It can be used for brands, creators, founder accoun
 
 ![Instagram Creative Intelligence Analyzer report view](public/instagram-analyzer-report.png)
 
+## Sample Report
+
+[![Groww analysis PDF preview](sample-data/groww-analysis-preview.png)](sample-data/Groww%20Analysis.pdf)
+
+[Open the full Groww analysis PDF](sample-data/Groww%20Analysis.pdf)
+
 ## What This Project Does
 
 - Accepts a target account context: account or brand name, handle, competitor/reference handles, content type, lookback window, date bounds, fetch count, analysis count, industry/category, audience, tone, and things to avoid.

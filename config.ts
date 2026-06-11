@@ -23,6 +23,7 @@ export const INSTAGRAM_WEB_PROFILE_INFO_URL =
 export const INSTAGRAM_DEFAULT_OUTPUT_DIR = "downloads/instagram";
 export const RUN_OUTPUT_DIR = "downloads/instagram/runs";
 export const MEDIA_OUTPUT_DIR = "downloads/instagram/media";
+export const SAMPLE_REPORT_PATH = "sample-data/sample-report.json";
 
 export const DEFAULT_FRAME_INTERVAL_SECONDS = 5;
 export const MAX_FRAMES_TO_EXTRACT = 20;
