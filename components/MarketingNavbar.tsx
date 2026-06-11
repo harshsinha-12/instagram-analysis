@@ -1,11 +1,29 @@
 "use client";
 
-import { BarChart3 } from "lucide-react";
+import { BarChart3, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export function MarketingNavbar() {
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-line bg-paper/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-line bg-paper/90 backdrop-blur-md">
+      <div className="border-b border-line bg-ink px-4 py-2 text-center text-xs font-medium text-white sm:text-sm">
+        <span className="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+          <span>Deployed preview: use the sample report.</span>
+          <Link href="/reports/demo-report" className="font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white">
+            View sample
+          </Link>
+          <span className="text-white/70">Full analysis runs need the complete deployment pipeline, or</span>
+          <a
+            href="https://github.com/harshsinha-12/instagram-analysis#readme"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 font-semibold underline decoration-white/40 underline-offset-4 hover:decoration-white"
+          >
+            run locally from the README
+            <ExternalLink className="h-3 w-3" aria-hidden="true" />
+          </a>
+        </span>
+      </div>
       <div className="flex w-full items-center justify-between px-6 md:px-12 py-4">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-leaf text-white">
