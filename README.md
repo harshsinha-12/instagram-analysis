@@ -399,7 +399,7 @@ OPENAI_FAST_MODEL
 Fallback default:
 
 ```txt
-gpt-5.5-mini
+gpt-5.4-mini
 ```
 
 Frame description flow:
@@ -776,7 +776,7 @@ Defaults are defined in `config.ts`:
 
 ```txt
 DEFAULT_OPENAI_REASONING_MODEL = gpt-5.5
-DEFAULT_OPENAI_FAST_MODEL = gpt-5.5-mini
+DEFAULT_OPENAI_FAST_MODEL = gpt-5.4-mini
 DEFAULT_OPENAI_TRANSCRIBE_MODEL = gpt-4o-transcribe
 ```
 
@@ -809,7 +809,7 @@ Create `.env.local`:
 ```bash
 OPENAI_API_KEY=your_api_key_here
 OPENAI_REASONING_MODEL=gpt-5.5
-OPENAI_FAST_MODEL=gpt-5.5-mini
+OPENAI_FAST_MODEL=gpt-5.4-mini
 OPENAI_TRANSCRIBE_MODEL=gpt-4o-transcribe
 ```
 
