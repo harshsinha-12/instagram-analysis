@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, Circle, Loader2 } from "lucide-react";
-import { ProgressEvent } from "@/lib/types";
+import { ProgressEvent } from "@/declaration";
 
 export default function JobProgressPage({ params }: { params: { id: string } }) {
   const [events, setEvents] = useState<ProgressEvent[]>([]);

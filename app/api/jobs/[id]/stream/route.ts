@@ -1,13 +1,11 @@
 import { completeJob, getJob } from "@/lib/jobs";
+import { REPORT_PROGRESS_TOTAL_STEPS } from "@/config";
+import { wait } from "@/fetcherUtils";
 
 const encoder = new TextEncoder();
 
 function sse(data: unknown) {
   return encoder.encode(`data: ${JSON.stringify(data)}\n\n`);
-}
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function GET(_request: Request, { params }: { params: { id: string } }) {
@@ -20,7 +18,7 @@ export async function GET(_request: Request, { params }: { params: { id: string 
   const stream = new ReadableStream({
     async start(controller) {
       let step = 1;
-      const totalSteps = 8;
+      const totalSteps = REPORT_PROGRESS_TOTAL_STEPS;
 
       controller.enqueue(sse({ status: "running", message: `Job created for ${job.input.brand}`, step, totalSteps }));
 

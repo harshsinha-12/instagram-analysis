@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BarChart3, FileVideo, Loader2, LucideIcon, PlayCircle } from "lucide-react";
-import { analysisConfig } from "@/lib/analysis-config";
+import { ANALYSIS_CONFIG } from "@/config";
 
 const highlights: Array<{ title: string; detail: string; Icon: LucideIcon }> = [
   {
@@ -90,24 +90,24 @@ export default function HomePage() {
           <div className="grid gap-4 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-medium">
               Brand
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brand" defaultValue={analysisConfig.brand.name} required />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brand" defaultValue={ANALYSIS_CONFIG.brand.name} required />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Brand handle
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandHandle" defaultValue={analysisConfig.brand.instagramHandle} required />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandHandle" defaultValue={ANALYSIS_CONFIG.brand.instagramHandle} required />
             </label>
             <label className="grid gap-2 text-sm font-medium md:col-span-2">
               Competitors
               <input
                 className="focus-ring rounded-md border border-line px-3 py-2"
                 name="competitors"
-                defaultValue={analysisConfig.competitors.map((competitor) => competitor.instagramHandle).join(", ")}
+                defaultValue={ANALYSIS_CONFIG.competitors.map((competitor) => competitor.instagramHandle).join(", ")}
                 required
               />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Lookback
-              <select className="focus-ring rounded-md border border-line px-3 py-2" name="lookbackDays" defaultValue={analysisConfig.collection.lookbackDays}>
+              <select className="focus-ring rounded-md border border-line px-3 py-2" name="lookbackDays" defaultValue={ANALYSIS_CONFIG.collection.lookbackDays}>
                 <option value="7">7 days</option>
                 <option value="14">14 days</option>
                 <option value="30">30 days</option>
@@ -116,7 +116,7 @@ export default function HomePage() {
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Content type
-              <select className="focus-ring rounded-md border border-line px-3 py-2" name="contentType" defaultValue={analysisConfig.collection.contentType}>
+              <select className="focus-ring rounded-md border border-line px-3 py-2" name="contentType" defaultValue={ANALYSIS_CONFIG.collection.contentType}>
                 <option value="reels">Reels</option>
                 <option value="posts">Posts</option>
                 <option value="both">Both</option>
@@ -124,11 +124,11 @@ export default function HomePage() {
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Date from
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateFrom" type="date" defaultValue={analysisConfig.collection.dateFrom} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateFrom" type="date" defaultValue={ANALYSIS_CONFIG.collection.dateFrom} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Date to
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateTo" type="date" defaultValue={analysisConfig.collection.dateTo} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="dateTo" type="date" defaultValue={ANALYSIS_CONFIG.collection.dateTo} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Posts to fetch per competitor
@@ -137,7 +137,7 @@ export default function HomePage() {
                 name="postsToFetchPerCompetitor"
                 type="number"
                 min="1"
-                defaultValue={analysisConfig.collection.postsToFetchPerCompetitor}
+                defaultValue={ANALYSIS_CONFIG.collection.postsToFetchPerCompetitor}
               />
             </label>
             <label className="grid gap-2 text-sm font-medium">
@@ -147,7 +147,7 @@ export default function HomePage() {
                 name="topPostsToSelect"
                 type="number"
                 min="1"
-                defaultValue={analysisConfig.selection.topPostsToSelect}
+                defaultValue={ANALYSIS_CONFIG.selection.topPostsToSelect}
               />
             </label>
             <label className="grid gap-2 text-sm font-medium">
@@ -157,24 +157,24 @@ export default function HomePage() {
                 name="reelsToAnalyze"
                 type="number"
                 min="1"
-                defaultValue={analysisConfig.selection.reelsToAnalyze}
+                defaultValue={ANALYSIS_CONFIG.selection.reelsToAnalyze}
               />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Industry
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="industry" defaultValue={analysisConfig.brand.industry} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="industry" defaultValue={ANALYSIS_CONFIG.brand.industry} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Target audience
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="targetAudience" defaultValue={analysisConfig.brand.targetAudience} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="targetAudience" defaultValue={ANALYSIS_CONFIG.brand.targetAudience} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Brand tone
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandTone" defaultValue={analysisConfig.brand.tone} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandTone" defaultValue={ANALYSIS_CONFIG.brand.tone} />
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Avoid
-              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandAvoid" defaultValue={analysisConfig.brand.avoid} />
+              <input className="focus-ring rounded-md border border-line px-3 py-2" name="brandAvoid" defaultValue={ANALYSIS_CONFIG.brand.avoid} />
             </label>
           </div>
 

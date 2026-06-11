@@ -1,4 +1,44 @@
-import { PostAnalysis, ScoredPost } from "@/lib/types";
+import { z } from "zod";
+import { PostAnalysis, ScoredPost, ToolDefinition } from "@/declaration";
+
+export const TOOL_FALLBACK_POST_ANALYSIS = "fallbackPostAnalysis";
+
+export const FallbackPostAnalysisInputSchema = z.object({
+  post: z.custom<ScoredPost>(),
+  brand: z.string().min(1),
+  reason: z.string().optional()
+});
+
+export const DEF_FALLBACK_POST_ANALYSIS: ToolDefinition = {
+  type: "function",
+  function: {
+    name: TOOL_FALLBACK_POST_ANALYSIS,
+    description:
+      "Create a deterministic fallback creative analysis for an Instagram post when model-based analysis fails, using only caption and public performance metrics.",
+    parameters: {
+      type: "object",
+      properties: {
+        post: {
+          type: "object",
+          description:
+            "The scored Instagram post to analyze from deterministic caption and metric signals."
+        },
+        brand: {
+          type: "string",
+          description:
+            "The brand name used to make the fallback adaptation and title brand-specific."
+        },
+        reason: {
+          type: "string",
+          description:
+            "Optional failure reason explaining why fallback analysis was used."
+        }
+      },
+      required: ["post", "brand"],
+      additionalProperties: false
+    }
+  }
+};
 
 function firstSentence(text: string) {
   const cleaned = text.trim().replace(/\s+/g, " ");
@@ -7,6 +47,11 @@ function firstSentence(text: string) {
 }
 
 export function fallbackPostAnalysis(post: ScoredPost, brand: string, reason?: string): PostAnalysis {
+  const input = FallbackPostAnalysisInputSchema.parse({ post, brand, reason });
+  post = input.post;
+  brand = input.brand;
+  reason = input.reason;
+
   const topic = firstSentence(post.caption).slice(0, 80);
   const hookText = firstSentence(post.caption);
 

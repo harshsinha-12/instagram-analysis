@@ -1,6 +1,6 @@
-import { AnalysisInput, JobStatus, ProgressCallback, Report } from "@/lib/types";
+import { AnalysisInput, JobStatus, ProgressCallback, Report } from "@/declaration";
 import { buildReport } from "@/lib/report";
-import { defaultInput } from "@/lib/analysis-config";
+import { DEFAULT_ANALYSIS_INPUT } from "@/config";
 
 type Job = {
   id: string;
@@ -48,5 +48,5 @@ export async function getReport(id: string): Promise<Report> {
   if (existing) {
     return (await completeJob(id))?.report ?? buildReport(existing.input, id);
   }
-  return buildReport(defaultInput, id);
+  return buildReport(DEFAULT_ANALYSIS_INPUT, id);
 }

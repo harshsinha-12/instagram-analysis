@@ -1,4 +1,4 @@
-import { ContentType, RawPost } from "@/lib/types";
+import { ContentType, RawPost } from "@/declaration";
 
 export type ScraperInput = {
   handle: string;

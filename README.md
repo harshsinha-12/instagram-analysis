@@ -97,35 +97,39 @@ components/
   TopPostsTable.tsx                Top reels table + transcript modal
 
 __agents__/
-  data-collection-agent.ts         Fetches competitor posts
-  scoring-agent.ts                 Filters and scores fetched posts
-  media-processing-agent.ts        Extracts media artifacts and transcripts
-  creative-analysis-agent.ts       Runs per-post creative analysis
-  pattern-aggregation-agent.ts     Finds recurring patterns
-  recommendation-agent.ts          Produces brand-specific ideas
-  report-agent.ts                  Orchestrates the full report
+  agent__master.ts                 Orchestrates the full report
+  agent__data_collection.ts        Fetches competitor posts
+  agent__scoring.ts                Filters and scores fetched posts
+  agent__media__processing.ts       Extracts media artifacts and transcripts
+  agent__creative__analysis.ts      Runs per-post creative analysis
+  agent__pattern__aggregation.ts    Finds recurring patterns
+  agent__recommendation.ts         Produces brand-specific ideas
 
 __tools__/
-  openai-client.ts                 Responses API and transcription calls
-  media-processor.ts               ffmpeg/ffprobe audio, frame, duration work
-  transcription.ts                 Audio file to transcript wrapper
-  frame-describer.ts               Vision/frame description helper
-  fallback-analysis.ts             Non-fatal AI fallback output
-  logger.ts                        pino logger
+  tools__instagram.ts              Instagram fetch tool definition + zod contract
+  tools__openai.ts                 Responses API and transcription calls
+  tools__media_processor.ts        ffmpeg/ffprobe audio, frame, duration work
+  tools__transcription.ts          Audio file to transcript wrapper
+  tools__frame_describer.ts        Vision/frame description helper
+  tools__fallback_analysis.ts      Non-fatal AI fallback output
+  tools__logger.ts                 pino logger
 
 __prompts__/
-  post-analysis.ts                 Per-post prompt and JSON schema
-  frame-description.ts             Frame description prompt/schema
-  pattern-aggregation.ts           Pattern aggregation prompt/schema
-  recommendations.ts               Recommendation prompt/schema
+  prompt__post__analysis.ts         Per-post prompt and JSON schema
+  prompt__frame__description.ts     Frame description prompt/schema
+  prompt__pattern__aggregation.ts   Pattern aggregation prompt/schema
+  prompt__recommendations.ts       Recommendation prompt/schema
 
 lib/
-  analysis-config.ts               Default brand/config values
   jobs.ts                          In-memory job store
-  report.ts                        Thin report-agent wrapper
+  report.ts                        Thin master-agent wrapper
   run-storage.ts                   Local JSON artifact writer
   scoring.ts                       Deterministic scoring math
-  types.ts                         Shared TypeScript types
+  types.ts                         Compatibility re-export for shared types
+
+config.ts                          Agent names, defaults, route schema, model/run knobs
+declaration.ts                     Shared TypeScript declarations
+fetcherUtils.ts                    Shared fetcher/route helpers
 
 scrapers/
   base-scraper.interface.ts        Scraper contract

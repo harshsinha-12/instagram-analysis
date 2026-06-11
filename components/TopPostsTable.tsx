@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FileText, X } from "lucide-react";
-import { AnalyzedPost } from "@/lib/types";
+import { AnalyzedPost } from "@/declaration";
 
 function percent(value: number) {
   return `${(value * 100).toFixed(2)}%`;

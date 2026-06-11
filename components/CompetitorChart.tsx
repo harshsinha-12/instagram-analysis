@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Report } from "@/lib/types";
+import { Report } from "@/declaration";
 
 export function CompetitorChart({ competitors }: { competitors: Report["competitors"] }) {
   const data = competitors.map((competitor) => ({

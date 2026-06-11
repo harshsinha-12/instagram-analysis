@@ -1,5 +1,5 @@
-import { runReportAgent } from "@/__agents__/report-agent";
-import { AnalysisInput, ProgressCallback } from "@/lib/types";
+import { runMasterAgent } from "@/__agents__/agent__master";
+import { AnalysisInput, ProgressCallback } from "@/declaration";
 
 export function normalizeHandle(value: string) {
   const trimmed = value.trim();
@@ -8,5 +8,5 @@ export function normalizeHandle(value: string) {
 }
 
 export async function buildReport(input: AnalysisInput, id = "demo-report", onProgress?: ProgressCallback) {
-  return runReportAgent(input, id, onProgress);
+  return runMasterAgent(input, id, onProgress);
 }

@@ -1,4 +1,4 @@
-import { RawPost, ScoredPost } from "@/lib/types";
+import { RawPost, ScoredPost } from "@/declaration";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const SCORE_WEIGHTS = {

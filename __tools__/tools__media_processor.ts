@@ -2,9 +2,44 @@ import { execFile } from "node:child_process";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { promisify } from "node:util";
-import { MediaArtifacts, ScoredPost } from "@/lib/types";
+import { z } from "zod";
+import { MediaArtifacts, ScoredPost, ToolDefinition } from "@/declaration";
+import { DEFAULT_FRAME_INTERVAL_SECONDS, MAX_FRAMES_TO_EXTRACT, MEDIA_OUTPUT_DIR } from "@/config";
 
 const execFileAsync = promisify(execFile);
+
+export const TOOL_PROCESS_POST_MEDIA = "processPostMedia";
+
+export const ProcessPostMediaInputSchema = z.object({
+  post: z.custom<ScoredPost>(),
+  runId: z.string().min(1)
+});
+
+export const DEF_PROCESS_POST_MEDIA: ToolDefinition = {
+  type: "function",
+  function: {
+    name: TOOL_PROCESS_POST_MEDIA,
+    description:
+      "Extract media artifacts for a selected Instagram post, including audio, duration, and sampled video frames for downstream transcription and visual analysis.",
+    parameters: {
+      type: "object",
+      properties: {
+        post: {
+          type: "object",
+          description:
+            "The scored Instagram post object selected for deep media analysis. It should include id, shortcode, caption, metrics, contentType, and downloadedVideoPath when available."
+        },
+        runId: {
+          type: "string",
+          description:
+            "The current report run id used to place extracted media artifacts under a deterministic run directory."
+        }
+      },
+      required: ["post", "runId"],
+      additionalProperties: false
+    }
+  }
+};
 
 async function runFfmpeg(args: string[]) {
   await execFileAsync("ffmpeg", ["-y", ...args], { maxBuffer: 1024 * 1024 * 10 });
@@ -17,7 +52,11 @@ async function getMediaDuration(filePath: string) {
 }
 
 export async function processPostMedia(post: ScoredPost, runId: string): Promise<MediaArtifacts> {
-  const baseDir = path.join(process.cwd(), "downloads", "instagram", "media", runId, post.shortcode);
+  const parsed = ProcessPostMediaInputSchema.parse({ post, runId });
+  post = parsed.post;
+  runId = parsed.runId;
+
+  const baseDir = path.join(process.cwd(), MEDIA_OUTPUT_DIR, runId, post.shortcode);
   const artifacts: MediaArtifacts = {
     postId: post.id,
     shortcode: post.shortcode,
@@ -52,8 +91,16 @@ export async function processPostMedia(post: ScoredPost, runId: string): Promise
   }
 
   try {
-    await runFfmpeg(["-i", post.downloadedVideoPath, "-vf", "fps=1/2", "-frames:v", "10", framePattern]);
-    for (let index = 1; index <= 10; index += 1) {
+    await runFfmpeg([
+      "-i",
+      post.downloadedVideoPath,
+      "-vf",
+      `fps=1/${DEFAULT_FRAME_INTERVAL_SECONDS}`,
+      "-frames:v",
+      String(MAX_FRAMES_TO_EXTRACT),
+      framePattern
+    ]);
+    for (let index = 1; index <= MAX_FRAMES_TO_EXTRACT; index += 1) {
       artifacts.framePaths.push(path.join(baseDir, "frames", `frame-${String(index).padStart(3, "0")}.jpg`));
     }
   } catch (error) {

@@ -3,11 +3,13 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import { RawPost } from "@/lib/types";
+import { RawPost } from "@/declaration";
+import {
+  INSTAGRAM_DEFAULT_OUTPUT_DIR,
+  INSTAGRAM_WEB_PROFILE_INFO_URL
+} from "@/config";
+import { extractInstagramUsername, normalizeHandle } from "@/fetcherUtils";
 import { InstagramScraper, ScraperInput, ScraperResult } from "@/scrapers/base-scraper.interface";
-
-const WEB_PROFILE_INFO_URL = "https://www.instagram.com/api/v1/users/web_profile_info/";
-const DEFAULT_OUTPUT_DIR = "downloads/instagram";
 
 type InstagramPostNode = {
   id: string;
@@ -127,21 +129,6 @@ async function fetchVideoUrl(shortcode: string, mediaId: string) {
   return "";
 }
 
-function extractUsername(input: string) {
-  if (input.startsWith("@")) return input.slice(1);
-  if (!input.startsWith("http")) return input;
-  const url = new URL(input);
-  const username = url.pathname.split("/").filter(Boolean)[0];
-  if (!username) throw new Error(`Could not extract username from ${input}`);
-  return username;
-}
-
-function normalizeHandle(value: string) {
-  const trimmed = value.trim();
-  if (!trimmed) return "";
-  return trimmed.startsWith("@") ? trimmed : `@${trimmed}`;
-}
-
 function getCaption(node: InstagramPostNode) {
   return node.edge_media_to_caption?.edges?.[0]?.node?.text ?? "";
 }
@@ -172,17 +159,17 @@ async function downloadVideo(videoUrl: string, destination: string) {
 
 export class InstagramWebScraper implements InstagramScraper {
   async fetchPosts(input: ScraperInput): Promise<ScraperResult> {
-    const username = extractUsername(input.handle);
+    const username = extractInstagramUsername(input.handle);
     const handle = normalizeHandle(username);
     const limit = input.limit ?? 5;
-    const outputRoot = input.outputDir ?? DEFAULT_OUTPUT_DIR;
+    const outputRoot = input.outputDir ?? INSTAGRAM_DEFAULT_OUTPUT_DIR;
     const outputDir = path.join(outputRoot, username);
 
     if (input.downloadVideos) {
       await mkdir(outputDir, { recursive: true });
     }
 
-    const profileUrl = `${WEB_PROFILE_INFO_URL}?username=${encodeURIComponent(username)}`;
+    const profileUrl = `${INSTAGRAM_WEB_PROFILE_INFO_URL}?username=${encodeURIComponent(username)}`;
     const profile = await fetchJson<InstagramProfileResponse>(profileUrl, `https://www.instagram.com/${username}/`);
     const user = profile.data?.user;
     const edges = user?.edge_owner_to_timeline_media?.edges ?? [];
