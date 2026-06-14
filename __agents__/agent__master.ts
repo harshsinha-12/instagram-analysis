@@ -5,7 +5,7 @@ import { runPatternAggregationAgent } from "@/__agents__/agent__pattern__aggrega
 import { runRecommendationAgent } from "@/__agents__/agent__recommendation";
 import { runScoringAgent } from "@/__agents__/agent__scoring";
 import { logger } from "@/__tools__/tools__logger";
-import { createRunId, saveRunJson } from "@/lib/run-storage";
+import { createRunId, saveRunCsv, saveRunJson } from "@/lib/run-storage";
 import { AnalyzedPost, AnalysisInput, MediaArtifacts, ProgressCallback, Report, ScoredPost } from "@/declaration";
 import { AGENT_MASTER } from "@/config";
 import { DataCollectionResult } from "./agent__data__collection";
@@ -25,6 +25,7 @@ function buildEmptyReport(input: AnalysisInput, id: string, runId: string, rawDa
     createdAt: new Date().toISOString(),
     rawDataPath,
     fetchErrors,
+    csvDataPath: undefined,
     competitors: [],
     topPosts: [],
     patterns: [],
@@ -151,6 +152,8 @@ export async function runMasterAgent(input: AnalysisInput, id = "demo-report", o
   const { analyzed, aiDataPath } = await analyzeSelectedPosts(context, selectedForAnalysis, mediaByPostId);
   const { patterns, contentPillars, reelIdeas, actionPlan } = await buildRecommendationBlocks(context, analyzed);
   const competitors = buildCompetitorSummaries(scored);
+  await onProgress?.("Creating CSV export with scraped reel metrics and analysis reasons...");
+  const csvDataPath = (await saveRunCsv({ id, runId, scored, analyzed })).filePath;
 
   const report: Report = {
     id,
@@ -159,6 +162,7 @@ export async function runMasterAgent(input: AnalysisInput, id = "demo-report", o
     createdAt: new Date().toISOString(),
     rawDataPath,
     scoredDataPath,
+    csvDataPath,
     mediaDataPath,
     aiDataPath,
     fetchErrors: collection.fetchErrors,

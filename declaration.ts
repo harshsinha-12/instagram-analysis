@@ -1,6 +1,7 @@
 export type ContentType = "reels" | "posts" | "both";
 
 export type AnalysisInput = {
+  analysisMode?: "competitor" | "single" | "chat";
   brand: string;
   brandHandle: string;
   competitors: string[];
@@ -16,6 +17,8 @@ export type AnalysisInput = {
   targetAudience?: string;
   brandTone?: string;
   brandAvoid?: string;
+  chatQuery?: string;
+  chatPlan?: string[];
 };
 
 export type RawPost = {
@@ -140,6 +143,7 @@ export type Report = {
   createdAt: string;
   rawDataPath?: string;
   scoredDataPath?: string;
+  csvDataPath?: string;
   mediaDataPath?: string;
   aiDataPath?: string;
   reportDataPath?: string;

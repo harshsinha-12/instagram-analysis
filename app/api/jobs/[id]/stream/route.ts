@@ -18,9 +18,15 @@ export async function GET(_request: Request, { params }: { params: { id: string 
   const stream = new ReadableStream({
     async start(controller) {
       let step = 1;
-      const totalSteps = REPORT_PROGRESS_TOTAL_STEPS;
+      const totalSteps = REPORT_PROGRESS_TOTAL_STEPS + (job.input.chatPlan?.length ?? 0);
 
       controller.enqueue(sse({ status: "running", message: `Job created for ${job.input.brand}`, step, totalSteps }));
+
+      for (const message of job.input.chatPlan ?? []) {
+        step += 1;
+        controller.enqueue(sse({ status: "running", message, step: Math.min(step, totalSteps - 1), totalSteps }));
+        await wait(100);
+      }
 
       try {
         const completed = await completeJob(params.id, async (message) => {

@@ -28,7 +28,7 @@ export const SAMPLE_REPORT_PATH = "sample-data/sample-report.json";
 export const DEFAULT_FRAME_INTERVAL_SECONDS = 5;
 export const MAX_FRAMES_TO_EXTRACT = 20;
 export const MAX_FRAMES_TO_DESCRIBE = 20;
-export const REPORT_PROGRESS_TOTAL_STEPS = 8;
+export const REPORT_PROGRESS_TOTAL_STEPS = 9;
 
 export const SCHEMA_POST_ANALYSIS = "post_analysis";
 export const SCHEMA_PATTERN_AGGREGATION = "pattern_aggregation";
@@ -71,6 +71,7 @@ export const ANALYSIS_CONFIG = {
 };
 
 export const DEFAULT_ANALYSIS_INPUT: AnalysisInput = {
+  analysisMode: "competitor",
   brand: ANALYSIS_CONFIG.brand.name,
   brandHandle: ANALYSIS_CONFIG.brand.instagramHandle,
   competitors: ANALYSIS_CONFIG.competitors.map((competitor) => competitor.instagramHandle),
@@ -89,6 +90,7 @@ export const DEFAULT_ANALYSIS_INPUT: AnalysisInput = {
 };
 
 export const ANALYZE_INPUT_SCHEMA = z.object({
+  analysisMode: z.enum(["competitor", "single", "chat"]).default("competitor"),
   brand: z.string().min(1),
   brandHandle: z.string().min(1),
   competitors: z.array(z.string().min(1)).min(1),
@@ -111,5 +113,7 @@ export const ANALYZE_INPUT_SCHEMA = z.object({
   industry: z.string().optional(),
   targetAudience: z.string().optional(),
   brandTone: z.string().optional(),
-  brandAvoid: z.string().optional()
+  brandAvoid: z.string().optional(),
+  chatQuery: z.string().optional(),
+  chatPlan: z.array(z.string()).optional()
 });

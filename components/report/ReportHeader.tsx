@@ -40,15 +40,19 @@ export function ReportHeader({ report }: { report: Report }) {
           </div>
         </div>
 
-        <div className="flex gap-3 no-print">
+        <div className="flex flex-wrap gap-3 no-print">
           <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 border border-line rounded-md text-sm font-medium text-ink hover:bg-surface transition-colors focus-ring">
             <Printer className="w-4 h-4" />
             Print PDF
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 border border-line rounded-md text-sm font-medium text-ink hover:bg-surface transition-colors focus-ring">
+          <a href={`/api/reports/${report.id}/export?format=csv`} className="flex items-center gap-2 px-4 py-2 border border-line rounded-md text-sm font-medium text-ink hover:bg-surface transition-colors focus-ring">
+            <Download className="w-4 h-4" />
+            CSV
+          </a>
+          <a href={`/api/reports/${report.id}/export`} className="flex items-center gap-2 px-4 py-2 border border-line rounded-md text-sm font-medium text-ink hover:bg-surface transition-colors focus-ring">
             <Download className="w-4 h-4" />
             JSON
-          </button>
+          </a>
         </div>
       </div>
     </header>
